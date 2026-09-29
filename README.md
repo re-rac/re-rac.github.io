@@ -177,3 +177,8 @@ This repo is `re-rac/re-rac.github.io`; a fork replaces that with its own owner 
 - **Status:** the status page is hand-maintained in `src/data/status.*`. It holds a rough estimate per planet, each
   area's list of what's done, in progress and to come, and the short *Where it stands* lists on the home page. Update
   this file when progress changes, and set its date.
+
+## License
+
+ISC. See [LICENSE](LICENSE). It covers the site's own code and text only: the ReRAC logo and icon are the project's
+own, and the third-party game art in `src/assets/third-party/` isn't included and isn't covered.
