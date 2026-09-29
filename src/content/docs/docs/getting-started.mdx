@@ -1,49 +1,39 @@
 ---
 title: Getting started
-description: What you need to play ReRAC, and the steps from installing the launcher to starting the game.
+description: What you need to play ReRAC, and how to go from installing the launcher to playing.
 ---
 
 import { Steps, Aside } from '@astrojs/starlight/components';
 
-<Aside type="caution" title="Coming later">
-The launcher and the game have not been released yet, so the download step below cannot be done today. The steps
-describe the intended path; developers can already follow it with a local build (see
-[For developers](../developers/)).
+<Aside type="caution" title="Not released yet">
+The launcher isn't out yet, so you can't follow these steps today. They show how it will work. Developers can try a
+local build; see [For developers](../developers/).
 </Aside>
 
 ## What you need
 
-- **Your own disc.** A legally obtained PlayStation 2 disc of Ratchet & Clank (2002), **NTSC-U, SCUS-97199,
-  version 1.00**, as a disc image (`.iso`). See [Supported game versions](../supported-versions/) and
-  [Dumping your own disc](../dumping-your-disc/).
-- **A computer.** macOS on Apple Silicon is the development platform and the only one tested so far. Windows and Linux
-  are planned but untested.
-- **Disk space.** About 4.5 GB for the extracted game data.
-
-ReRAC contains no game assets and no copy of the game's code. Everything the game needs comes from your disc image.
+- **Your own copy of the game** on disc, saved as a disc image. [Supported versions](../supported-versions/) tells you
+  which disc works, and [Dumping your disc](../dumping-your-disc/) shows how to make the image.
+- **A Mac with Apple Silicon.** It's the only system ReRAC is tested on so far. Windows and Linux are planned.
+- **About 4.5 GB of free space** for the game data.
 
 ## Install and play
 
 <Steps>
 
-1. **Download the ReRAC Launcher** for your system from the [home page](../../#download), and install it.
+1. **Install the ReRAC Launcher.** Download it from the [home page](../../#download).
 
-2. **Add a game version.** Official versions will be downloadable from **Settings → Version Management → Official**
-   once they are published. Pick one and **Set active**.
+2. **Choose a version of ReRAC.** Open **Settings → Version Management → Official**, pick a version and click
+   **Set active**.
 
-3. **Install the game data.** Select **Ratchet & Clank** in the sidebar, choose **Install via ISO**, and pick the
-   image of your disc. The active version's extractor checks the disc, copies the data (about 4.5 GB) and prepares
-   it.
+3. **Add the game.** Select **Ratchet & Clank** in the sidebar, choose **Install via ISO** and pick your disc image.
+   The launcher checks the disc and copies what it needs.
 
-4. **Play.** The launcher starts the game with the extracted data and shows *Running…* until it exits.
+4. **Press Play.**
 
 </Steps>
 
-The extraction happens once. The engine never reads your disc image again; it reads only the data folder the
-extractor wrote.
+You only add the game once. After that, just open the launcher and press **Play**.
 
-## Next
-
-- [Using the launcher](../using-the-launcher/): everything else the launcher can do.
-- [Controls](../controls/): the keyboard and gamepad mapping.
-- [Troubleshooting and logs](../troubleshooting/): if the disc is refused or the game will not start.
+If something goes wrong, see [Troubleshooting](../troubleshooting/). The [controls](../controls/) page shows which key
+does what.

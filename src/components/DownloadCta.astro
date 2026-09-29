@@ -7,14 +7,13 @@
  *                            true: the button, server-rendered from the build-time release data. A small script
  *                            (DownloadCtaScript) then detects the visitor's OS and points it at the matching
  *                            installer. When no release exists yet it reads "Coming soon" and links to the docs.
- *   showPlatformDownloads    the latest-release line, the platform cards and the disc note under the button.
+ *   showPlatformDownloads    the latest-release line, the platform cards and a short note under the button.
  */
 import {
 	latestDownloadUrl,
 	launcherDownloadEnabled,
 	launcherReleasesUrl,
 	showPlatformDownloads,
-	supportedDisc,
 } from '../config';
 import { formatBytes, formatDate, getLauncherInfo } from '../lib/releases';
 import { link } from '../lib/url';
@@ -91,7 +90,7 @@ const primaryHref = showPlatformDownloads ? `#${id}-platforms` : launcherRelease
 					<span class="cta__primary-label">Download the Launcher</span>
 					<span class="cta__primary-sub">
 						<span class="led led--amber" aria-hidden="true" />
-						Coming soon · not released yet
+						Not released yet
 					</span>
 				</span>
 			</a>
@@ -113,7 +112,7 @@ const primaryHref = showPlatformDownloads ? `#${id}-platforms` : launcherRelease
 						) : (
 							<>
 								<span class="led led--amber" aria-hidden="true" />
-								No release yet. Follow the <a href={link('docs/changelog/')}>changelog</a>.
+								Nothing released yet. The <a href={link('docs/changelog/')}>changelog</a> will have it first.
 							</>
 						)
 					}
@@ -148,9 +147,8 @@ const primaryHref = showPlatformDownloads ? `#${id}-platforms` : launcherRelease
 				{
 					!compact && (
 						<p class="cta__note">
-							Needs your own {supportedDisc.title} disc:{' '}
-							<span class="nowrap">{supportedDisc.region} {supportedDisc.serial} v{supportedDisc.version}</span>.
-							macOS on Apple Silicon is the only tested platform so far.
+							You’ll need your own copy of the game (<a href={link('docs/supported-versions/')}>which one?</a>). So far
+							ReRAC is tested only on Macs with Apple Silicon.
 							{latest && (
 								<>
 									{' '}

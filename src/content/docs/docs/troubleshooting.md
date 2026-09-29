@@ -1,59 +1,54 @@
 ---
 title: Troubleshooting and logs
-description: What the ReRAC extractor and game error codes mean, and where the launcher's log files are.
+description: What ReRAC's error messages mean, what to do about them, and where to find the log files.
 ---
 
 ## Find the logs
 
-When you ask for help, attach your log files. Open the folder from the launcher with **Help → Logs folder**, or
+If you ask for help, attach your log files. To open the folder, use **Help → Logs folder** in the launcher, or
 **Settings → Folders → Open logs**.
 
-Every extraction, verification, asset export and game session writes its own file there:
+Each time the launcher adds the game, checks it, exports assets or runs a game session, it writes a new file:
 
-| File | Written by |
+| File | Written when you |
 |---|---|
-| `extract-rac1-<time>.log` | an extraction from your disc image |
-| `verify-rac1-<time>.log` | a verification of the game data |
-| `export-rac1-<time>.log` | an asset export |
-| `rac1-<time>.log` | a game session |
+| `extract-rac1-<time>.log` | add the game from your disc image |
+| `verify-rac1-<time>.log` | check the game data |
+| `export-rac1-<time>.log` | export assets |
+| `rac1-<time>.log` | play |
 
-The launcher itself writes no log of its own. There is no support-package export; attach the files instead.
-
-With the default data folder, the logs are in:
+Unless you moved the launcher's folder, the logs are here (these folders are hidden by default):
 
 - **Windows:** `C:\Users\<YOUR_USER_NAME>\AppData\Local\rerac\logs`
-- **Linux:** `/home/<YOUR_USER_NAME>/.local/share/rerac/logs` (or `$XDG_DATA_HOME/rerac/logs` when that is set)
+- **Linux:** `/home/<YOUR_USER_NAME>/.local/share/rerac/logs` (or `$XDG_DATA_HOME/rerac/logs` if that's set)
 - **macOS:** `/Users/<YOUR_USER_NAME>/Library/Application Support/rerac/logs`
 
-These folders are hidden by default. If you moved the data folder (**Settings → Folders**), the logs moved with it into
-`<your data folder>/logs`.
+If you moved it in **Settings → Folders**, they're in the `logs` folder inside it.
 
-## Extraction errors
+## Errors when adding the game
 
-The extractor reports one of these codes when it cannot finish:
-
-| Code | Meaning | What to do |
+| Code | What it means | What to do |
 |---|---|---|
-| 10 | The image cannot be opened or read, or it is **truncated** | Check the file and its permissions; make the image again |
-| 11 | Not an ISO 9660 image: a raw `.bin`, CHD, CSO or another file | Make a plain 2048-byte-sector `.iso` ([how](../dumping-your-disc/)) |
-| 20 | An image of a disc that is not Ratchet & Clank | Pick the right image |
-| 21 | Ratchet & Clank, but an unsupported build or region | Only NTSC-U SCUS-97199 v1.00 is supported for now ([details](../supported-versions/)) |
-| 30 | Writing the game data failed | Check the data folder's permissions |
-| 31 | Not enough disk space | Free about 4.5 GB, or move the data folder |
-| 40 | Verification failed: a file's size or SHA-1 is wrong | The image is damaged; make it again. The log names the bad files |
-| 99 | An internal error | Report it with the log |
+| 10 | The image can't be read, or it's cut short | Check the file, or make the image again |
+| 11 | It isn't a plain `.iso` (it's a `.bin`, CHD, CSO or another file) | Make a plain `.iso` ([how](../dumping-your-disc/)) |
+| 20 | It's a different game | Pick your Ratchet & Clank image |
+| 21 | It's Ratchet & Clank, but not a supported version | Use the [supported disc](../supported-versions/) |
+| 30 | The game data couldn't be saved | Check that you can write to the launcher's folder |
+| 31 | There isn't enough disk space | Free up about 4.5 GB, or move the launcher's folder |
+| 40 | Some files don't match the original, so the image is damaged | Make the image again. The log lists the bad files |
+| 99 | Something unexpected went wrong | Report it and attach the log |
 
-## The game will not start
+## The game won't start
 
 | What the launcher says | Why | What to do |
 |---|---|---|
-| "The game data is missing or incomplete." | The data folder is missing, or the extraction did not finish | **Re-extract** |
-| "The game data doesn't match this ReRAC version." | The data was extracted for another data format | **Re-extract** |
-| "ReRAC couldn't start." | The launcher and the game version do not match | Update the launcher or pick another version |
+| "The game data is missing or incomplete." | The game data is gone, or adding the game didn't finish | Click **Re-extract** |
+| "The game data doesn't match this ReRAC version." | This version of ReRAC needs the data prepared differently | Click **Re-extract** |
+| "ReRAC couldn't start." | The launcher and this version of ReRAC don't match | Get the latest launcher, or choose another version |
 
-Any other stop is a crash. Attach the session log (`rac1-<time>.log`) when you report it.
+If the game closes on its own, it has crashed. Please report it and attach the session log (`rac1-<time>.log`).
 
-## macOS blocks the download
+## macOS won't open the download
 
-Builds are not signed yet, so macOS Gatekeeper may quarantine a downloaded file and refuse to open it. Open it once
-from Finder with **right-click → Open**, or allow it in **System Settings → Privacy & Security**.
+ReRAC isn't signed yet, so macOS may refuse to open it the first time. Right-click it in Finder and choose **Open**,
+or allow it in **System Settings → Privacy & Security**.

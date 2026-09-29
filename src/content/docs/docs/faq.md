@@ -1,85 +1,80 @@
 ---
 title: FAQ
-description: Frequently asked questions about ReRAC, the unofficial native PC port of Ratchet & Clank.
+description: Short answers to common questions about ReRAC.
 ---
 
-## About the project
+## About ReRAC
 
 ### What is ReRAC?
 
-An unofficial native PC port of Ratchet & Clank (2002, PlayStation 2), in Rust, on the Bevy engine.
-The game's systems are rebuilt from a decompilation of the original code and run as native code on your PC.
+A fan-made PC port of Ratchet & Clank, the 2002 PlayStation 2 game. It runs natively on your computer, using your own
+copy of the game.
 
 ### Is it an emulator?
 
-No. It is not an emulator, not a static recompiler, and it does not model the PS2 hardware. Where the PS2 hardware
-causes a visible effect, the port reproduces the result natively.
+No. ReRAC runs natively, like any other PC game.
 
 ### Is it official?
 
-No. ReRAC is an unofficial fan project. It is not affiliated with or endorsed by Sony Interactive Entertainment or
-Insomniac Games.
+No. ReRAC is an unofficial fan project, not affiliated with or endorsed by Sony Interactive Entertainment or Insomniac
+Games.
 
 ### Can I play it now?
 
-Not yet. It is early and in active development, and not playable from start to finish. All 19 levels load and render,
-and Novalis is the most complete level. Among the missing pieces: planet travel and the ship, the main menu and saving
-and loading, the Clank, Giant Clank and Hologuise sections, the hoverboard and races, and ship combat. Neither the game
-nor the launcher has been released.
+Not yet. Nothing has been released, and the game can't be played from start to finish yet. The
+[home page](../../#status) shows what works so far and what's still to come.
 
 ### Is it open source?
 
-Not yet. For now no licence is granted for the game or the launcher code. The bundled fonts are under the SIL Open Font
-License.
+Not yet. There's no licence for the code for now.
 
-## The disc
+## Your copy of the game
 
 ### Does ReRAC include the game?
 
-No. It contains no game assets and no copy of the game's code. You need your own, legally obtained PlayStation 2 disc,
-and the launcher extracts the data from an image of it.
+No. You need your own copy on disc. The launcher reads the game from an image of it, once.
 
 ### Which disc do I need?
 
-Ratchet & Clank (2002) for PlayStation 2, **NTSC-U, SCUS-97199, version 1.00**. See
-[Supported game versions](../supported-versions/).
+The original North American PlayStation 2 release: NTSC-U, SCUS-97199, version 1.00. See
+[Supported versions](../supported-versions/).
 
 ### Will my PAL or Japanese disc work?
 
-Not for now. PAL (SCES-50916), NTSC-J (SCPS-15037) and demo discs are refused.
+Not for now.
 
-### My disc is a Greatest Hits copy. Will it work?
+### I have a Greatest Hits disc. Will it work?
 
-Only if its boot executable is the v1.00 one. Greatest Hits discs share the serial SCUS-97199; the extractor checks the
-boot executable's SHA-1 to tell them apart.
+Only if it matches version 1.00. The launcher checks when you add it.
 
 ### Where can I download the game?
 
-Not here. ReRAC works only with a disc you own. See [Dumping your own disc](../dumping-your-disc/).
+Not here. ReRAC only works with a disc you own. [Dumping your disc](../dumping-your-disc/) shows how to make an image of
+it.
 
-### Does ReRAC read my disc image every time?
+### Does ReRAC need my disc every time I play?
 
-No. The extractor reads it once and writes a data folder. The game reads only that folder.
+No. The launcher reads it once. After that, you just press **Play**.
 
-## Platforms and the launcher
+## The launcher
 
-### Which systems does it run on?
+### Which computers does it run on?
 
-macOS on Apple Silicon is the development platform and the only one tested. Windows and Linux are planned but untested.
+For now, Macs with Apple Silicon. That's the only system it's tested on. Windows and Linux are planned.
 
 ### Why a launcher?
 
-It does the one-time extraction from your disc image, installs and updates game versions, and starts the game. Mod
-management is planned on top of it.
+It sets up the game from your disc, keeps ReRAC up to date and starts it. Later, it will manage mods too.
 
-### Can I export the game's textures, audio or models?
+### Can I export the game's textures, sounds or models?
 
-Yes, from your own extracted data: the launcher's **⋯ → Export assets…** writes PNG, WAV, glTF and JSON files.
+Yes, from your own copy. In the launcher, choose **⋯ → Export assets…**. See
+[Using the launcher](../using-the-launcher/#the--menu).
 
-### Are mods supported?
+### Will there be mods?
 
-Planned, not yet. See [Mods](../mods/).
+Yes, that's the plan. See [Mods](../mods/).
 
 ### Something went wrong. Where are the logs?
 
-See [Troubleshooting and logs](../troubleshooting/).
+See [Troubleshooting and logs](../troubleshooting/#find-the-logs).

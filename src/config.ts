@@ -25,10 +25,11 @@ export const siteBase = normaliseBase(env.SITE_BASE || '/');
 
 export const siteName = 'ReRAC';
 /** Follows the name in the home page title. */
-export const siteSubtitle = 'An unofficial native PC port of Ratchet & Clank (2002)';
-export const siteTagline = 'Ratchet & Clank (PS2, 2002), rebuilt natively for PC.';
+export const siteSubtitle = 'Ratchet & Clank, rebuilt for PC';
+/** The hero headline. */
+export const siteTagline = 'Ratchet & Clank, rebuilt for PC.';
 export const siteDescription =
-	'ReRAC is an unofficial native PC port of Ratchet & Clank (PS2, 2002), built in Rust and Bevy from a decompilation. Not an emulator. Bring your own disc.';
+	'ReRAC is a fan-made PC port of Ratchet & Clank, the 2002 PlayStation 2 classic. It runs natively on your computer, using your own copy of the game.';
 
 /**
  * Which pieces of the art in src/assets/third-party/ the pages use. Both false ships only original art.
@@ -45,8 +46,8 @@ export const thirdPartyArt = {
  *   launcherDownloadEnabled  true: the big button reads "Download the Launcher" and links to the installer for the
  *                            visitor's OS (from the release data). false: a disabled "Coming soon" button with no
  *                            link, and the OS-detection script is not loaded.
- *   showPlatformDownloads    true: under the button, the latest-release line, one card per platform and the
- *                            supported-disc note. false: none of these are rendered.
+ *   showPlatformDownloads    true: under the button, the latest-release line, one card per platform and a short
+ *                            note. false: none of these are rendered.
  */
 export const launcherDownloadEnabled = false;
 export const showPlatformDownloads = false;
@@ -109,13 +110,6 @@ export const platforms: Platform[] = [
 
 export const latestDownloadUrl = (asset: string) =>
 	`https://github.com/${org}/${launcherRepo}/releases/latest/download/${asset}`;
-
-export const supportedDisc = {
-	title: 'Ratchet & Clank',
-	region: 'NTSC-U',
-	serial: 'SCUS-97199',
-	version: '1.00',
-};
 
 function normaliseBase(base: string): string {
 	let b = base.trim();

@@ -5,7 +5,6 @@
  */
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 import { Aside } from '@astrojs/starlight/components';
-import { gameRepo, launcherRepo, org } from '../../config';
 import { formatDate, getChangelog } from '../../lib/releases';
 
 const days = await getChangelog();
@@ -15,20 +14,17 @@ const headings = days.map((d) => ({ depth: 2, slug: `d-${d.date}`, text: formatD
 <StarlightPage
 	frontmatter={{
 		title: 'Changelog',
-		description: 'Release notes for the ReRAC game and the ReRAC Launcher, newest first.',
+		description: 'Every release of ReRAC and the ReRAC Launcher, newest first.',
 		tableOfContents: days.length > 0,
 	}}
 	headings={headings}
 >
-	<p>
-		Release notes for the <strong>game</strong>{' '}(<code>{org}/{gameRepo}</code>) and the <strong>launcher</strong>{' '}
-		(<code>{org}/{launcherRepo}</code>), newest first. This page is rebuilt whenever either publishes a release.
-	</p>
+	<p>Every release of ReRAC and the ReRAC Launcher, newest first.</p>
 
 	{
 		days.length === 0 ? (
 			<Aside type="note" title="No releases yet">
-				Nothing has been released yet. The first game and launcher releases will appear here.
+				Nothing has been released so far. The first release will show up here.
 			</Aside>
 		) : (
 			days.map((day) => (

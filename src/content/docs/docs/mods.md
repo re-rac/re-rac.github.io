@@ -1,18 +1,15 @@
 ---
 title: Mods
-description: Mod support for ReRAC is planned, through the launcher. Here is the intent.
+description: Mods for ReRAC are planned, through the launcher.
 ---
 
 :::caution[Planned]
-Mods are not available yet. They are the last piece of the project, after the game itself. Nothing on this page can be
-used today.
+Mods aren't available yet. They'll come after the game itself is done.
 :::
 
-The plan is **real mods**: mods that can change assets, functionality and gameplay, not only textures.
+The plan is real mods: ones that can change not just how the game looks, but how it plays. You'll install them and
+switch them on or off in the ReRAC Launcher.
 
-- They will be installed, enabled and disabled **through the ReRAC Launcher**.
-- They will build on the game data you already extracted from your own disc, so a mod never needs to include any of
-  the original game's assets.
+Mods will build on the game data from your own disc, so they never need to include any of the original game.
 
-The design is still being worked out. This page will describe how to install and make mods once there is something to
-install.
+Once there's something to try, this page will explain how to install and make them.

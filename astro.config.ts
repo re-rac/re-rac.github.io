@@ -44,8 +44,8 @@ export default defineConfig({
 					items: [
 						{ label: 'Overview', slug: 'docs' },
 						{ label: 'Getting started', slug: 'docs/getting-started' },
-						{ label: 'Supported game versions', slug: 'docs/supported-versions' },
-						{ label: 'Dumping your own disc', slug: 'docs/dumping-your-disc' },
+						{ label: 'Supported versions', slug: 'docs/supported-versions' },
+						{ label: 'Dumping your disc', slug: 'docs/dumping-your-disc' },
 					],
 				},
 				{

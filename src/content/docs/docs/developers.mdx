@@ -1,46 +1,19 @@
 ---
 title: For developers
-description: Where the ReRAC game and launcher code live, and where their build instructions are.
+description: Where the ReRAC game and launcher code live.
 ---
 
 import { LinkCard, CardGrid, Aside } from '@astrojs/starlight/components';
 import { gameRepoUrl, launcherRepoUrl } from '../../../config';
 
-ReRAC is two repositories. Each README is the source of truth for building it; this page only points the way.
+ReRAC lives in two repositories. Their READMEs explain how to build, run and test everything, including how to run a
+local build of the game in the launcher.
 
 <CardGrid>
-	<LinkCard title="The game" description="Rust + Bevy engine, the ported game logic, and the extractor rerac-extract." href={gameRepoUrl} />
-	<LinkCard title="The launcher" description="Tauri 2 app: Rust backend and a React + TypeScript page." href={launcherRepoUrl} />
+	<LinkCard title="The game" description="The game and its extractor." href={`${gameRepoUrl}#readme`} />
+	<LinkCard title="The launcher" description="The ReRAC Launcher." href={`${launcherRepoUrl}#readme`} />
 </CardGrid>
 
 <Aside type="note">
-The repositories may not be public yet. The links work once they are.
+The repositories may not be public yet. The links will work once they are.
 </Aside>
-
-## The game
-
-The game repository's README covers:
-
-- **Requirements:** Rust (stable, through rustup) and an image of your disc, with about 4.4 GiB free for the
-  extracted data.
-- **Building and running:** identify your disc image, extract the game data into the development data folder, then
-  build and run. See the README section *Building and running the game*.
-- **Testing:** tests run through `cargo xtask`; see the README section *Testing*.
-- **Packaging** a version for the launcher: `cargo xtask package`.
-
-Read it at <a href={`${gameRepoUrl}#readme`}>the game repository's README</a>.
-
-## The launcher
-
-The launcher README covers the Tauri prerequisites per OS, `npm install` and `npm run tauri dev`, a browser mock of the
-backend for working on the page without the game, and **running a local build of the game**: package the game with
-`cargo xtask package`, then in the launcher use **Settings → Version Management → Development → Install from zip…** (or
-**Add build folder…**) and **Set active**.
-
-Read it at <a href={`${launcherRepoUrl}#readme`}>the launcher repository's README</a>.
-
-## How the pieces fit
-
-The launcher, the extractor and the game talk through a small, versioned contract: a version folder with a manifest,
-the extractor's command line and JSON progress lines, its exit codes, and the game's `--data-dir` option. It lives in
-the game repository (`docs/plan/launcher_contract.md`) and in the launcher repository (`docs/contract.md`).

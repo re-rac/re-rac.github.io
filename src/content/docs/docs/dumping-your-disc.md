@@ -1,36 +1,32 @@
 ---
-title: Dumping your own disc
-description: General guidance for making a disc image of your own Ratchet & Clank disc for ReRAC.
+title: Dumping your disc
+description: How to make an image of your own Ratchet & Clank disc for ReRAC.
 ---
 
-ReRAC needs an image of **your own, legally obtained** disc. It does not include the game, and this site does not
-link to downloads of it. Make the image yourself, from a disc you own.
+ReRAC needs an image of your own disc. It doesn't include the game, and this site doesn't link to copies of it.
+
+Before you start, check that you have the supported disc: NTSC-U, SCUS-97199, version 1.00. See
+[Supported versions](../supported-versions/).
 
 ## What the image must be
 
-- A plain **`.iso`** image with 2048-byte sectors (an ISO 9660 image).
-- **Not** a raw 2352-byte-sector `.bin`/`.cue` image, and **not** a compressed format such as CHD or CSO. The extractor
-  refuses these (error 11) for now.
-- Complete. A truncated image is refused (error 10), and a damaged one fails the SHA-1 check (error 40).
-- Of the [supported disc](../supported-versions/): NTSC-U, SCUS-97199, version 1.00.
+- A plain **`.iso`** image (ISO 9660, 2048-byte sectors).
+- Not a raw `.bin`/`.cue` image, and not a compressed one such as CHD or CSO. ReRAC can't read those yet.
+- Complete and undamaged. If it isn't, the launcher will tell you when you add it.
 
-## With a PC or Mac DVD drive
+## With a computer's DVD drive
 
-Ratchet & Clank is a PS2 DVD, so an ordinary DVD drive reads it. Use any disc imaging tool that writes a plain ISO
-image. Some common ways:
+Ratchet & Clank is on a DVD, so any ordinary DVD drive can read it. Use a disc imaging tool that saves a plain ISO:
 
-- **macOS:** Disk Utility → *File → New Image → Image from* the disc, format *DVD/CD master*. That writes a `.cdr`
-  file, which is a plain ISO image: rename it to `.iso`.
-- **Linux:** copy the whole disc device to a file, for example
-  `dd if=/dev/sr0 of=ratchet-and-clank.iso bs=2048 status=progress` (your drive may have another device name).
-- **Windows:** use a disc imaging program's "create image from disc" function, and choose the ISO format.
+- **macOS:** in Disk Utility, choose *File → New Image → Image from* the disc, with the format *DVD/CD master*. This
+  saves a `.cdr` file, which is already a plain ISO image: just rename it to `.iso`.
+- **Linux:** copy the whole disc to a file, for example
+  `dd if=/dev/sr0 of=ratchet-and-clank.iso bs=2048 status=progress`. Your drive may have a different device name.
+- **Windows:** use a disc imaging program's "create image from disc" option and choose the ISO format.
 
-## With your own PS2 console
+## With your own PS2
 
-Homebrew tools can also copy a disc from your own console. That works too, as long as the result is a plain
-2048-byte-sector `.iso` of your own disc.
+Homebrew tools can also copy the disc on your own console. That works too, as long as you end up with a plain `.iso`.
 
-## Check it
-
-When you **Install via ISO** in the launcher, the extractor first identifies the disc (serial, region and version)
-before copying anything. If it is refused, the launcher shows why; see [Troubleshooting](../troubleshooting/).
+When you add the image in the launcher, it checks the disc before copying anything. If there's a problem,
+[Troubleshooting](../troubleshooting/) explains what the message means.

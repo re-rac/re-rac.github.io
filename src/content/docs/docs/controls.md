@@ -1,15 +1,14 @@
 ---
 title: Controls
-description: The keyboard, mouse and gamepad mapping in the current ReRAC build.
+description: Which keys and buttons do what in ReRAC.
 ---
 
-ReRAC maps your keyboard, mouse or gamepad onto the buttons of a PlayStation 2 DualShock controller, so the game
-reads exactly what a real pad would send. The table below is the mapping in the current development build; it may
-change before release.
+You can play ReRAC with a keyboard and mouse or with any gamepad. Each key or button stands in for one on the original
+PlayStation 2 controller, as shown below. The layout may still change before release.
 
 ## Keyboard and mouse
 
-| DualShock | Keyboard / mouse |
+| PS2 controller | Keyboard / mouse |
 |---|---|
 | Left stick | <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> or the arrow keys; hold <kbd>Shift</kbd> to walk |
 | Right stick (camera) | Move the mouse while holding the right mouse button, or <kbd>,</kbd> / <kbd>.</kbd> |
@@ -28,9 +27,9 @@ change before release.
 
 ## Gamepad
 
-Gamepads are supported through the engine's standard gamepad input. The buttons map by position:
+A gamepad's buttons map by position:
 
-| DualShock | Gamepad |
+| PS2 controller | Gamepad |
 |---|---|
 | Left / right stick | Left / right stick |
 | ✕ □ ○ △ | Bottom / left / right / top face button |

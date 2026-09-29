@@ -1,42 +1,33 @@
 ---
 title: ReRAC documentation
-description: How to install and use ReRAC, the unofficial native PC port of Ratchet & Clank (PS2, 2002).
+description: How to set up and play ReRAC, a fan-made PC port of Ratchet & Clank.
 ---
 
 import { CardGrid, LinkCard, Aside } from '@astrojs/starlight/components';
 
-**ReRAC** is an unofficial, native PC port of Ratchet & Clank (2002, PlayStation 2),
-built in Rust on the Bevy engine from a decompilation of the original game. It is not an emulator.
+ReRAC is a fan-made PC port of Ratchet & Clank, the 2002 PlayStation 2 game. You play it through the ReRAC Launcher,
+which reads the game from your own disc once, keeps ReRAC up to date and starts it for you.
 
-You play it through the **ReRAC Launcher**. The launcher extracts the game data from an image of your own disc,
-then installs, updates and starts versions of the game.
-
-<Aside type="caution" title="Nothing is released yet">
-The game and the launcher are early and in active development, and neither has been released. These pages describe
-how things work today and how they are meant to work at release. Downloads are coming later.
+<Aside type="caution" title="Not released yet">
+ReRAC is still in development and there's nothing to download yet. These pages describe how it will work.
 </Aside>
 
 ## Start here
 
 <CardGrid>
-	<LinkCard title="Getting started" description="What you need, and the steps from download to playing." href="getting-started/" />
-	<LinkCard title="Supported game versions" description="Exactly which disc ReRAC accepts, and which it refuses." href="supported-versions/" />
-	<LinkCard title="Dumping your own disc" description="Make an image of your own disc with a PC drive." href="dumping-your-disc/" />
-	<LinkCard title="Using the launcher" description="Versions, extraction, playing, exporting assets, folders." href="using-the-launcher/" />
-</CardGrid>
-
-## When something goes wrong
-
-<CardGrid>
-	<LinkCard title="Troubleshooting and logs" description="Error codes, what they mean, and where the log files are." href="troubleshooting/" />
-	<LinkCard title="FAQ" description="Emulator? Assets? PAL discs? Mods? Answers here." href="faq/" />
+	<LinkCard title="Getting started" description="What you need, and how to start playing." href="getting-started/" />
+	<LinkCard title="Supported versions" description="Which copy of the game works." href="supported-versions/" />
+	<LinkCard title="Dumping your disc" description="Make an image of your own disc." href="dumping-your-disc/" />
+	<LinkCard title="Using the launcher" description="Everything the launcher can do." href="using-the-launcher/" />
 </CardGrid>
 
 ## More
 
 <CardGrid>
-	<LinkCard title="Controls" description="Keyboard and gamepad mapping in the current build." href="controls/" />
-	<LinkCard title="Mods" description="Planned: how mods will work through the launcher." href="mods/" />
-	<LinkCard title="For developers" description="Where the code lives and how to build it." href="developers/" />
-	<LinkCard title="Changelog" description="Game and launcher releases, newest first." href="changelog/" />
+	<LinkCard title="Troubleshooting and logs" description="What an error means, and where to find the logs." href="troubleshooting/" />
+	<LinkCard title="FAQ" description="Short answers to common questions." href="faq/" />
+	<LinkCard title="Controls" description="Keyboard, mouse and gamepad." href="controls/" />
+	<LinkCard title="Mods" description="Planned, through the launcher." href="mods/" />
+	<LinkCard title="For developers" description="Links to the code." href="developers/" />
+	<LinkCard title="Changelog" description="Every release, newest first." href="changelog/" />
 </CardGrid>

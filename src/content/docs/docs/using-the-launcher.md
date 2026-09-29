@@ -1,51 +1,48 @@
 ---
 title: Using the launcher
-description: Game versions, installing the game data from your disc image, playing, exporting assets and the launcher's folders.
+description: Versions of ReRAC, adding the game, playing, exporting assets, and where the launcher keeps its files.
 ---
 
-The **ReRAC Launcher** installs and updates versions of ReRAC, extracts the game data from your own disc image, and
-starts the game. Mod management is planned. It is built with [Tauri](https://v2.tauri.app/).
+The ReRAC Launcher sets up the game from your disc, keeps ReRAC up to date and starts it. This page covers everything
+else it can do.
 
-## Game versions
+## Versions of ReRAC
 
-A *version* is one downloadable build of the game. You manage them in **Settings → Version Management**:
+The launcher can hold more than one version of ReRAC. You'll find them in **Settings → Version Management**:
 
-- **Official:** released versions, downloadable here once they are published (coming later).
-- **Development:** local builds. **Install from zip…** installs a packaged build; **Add build folder…** uses an unpacked
-  build folder in place.
+- **Official:** released versions of ReRAC. There are none yet.
+- **Development:** local builds, for developers. **Install from zip…** installs a packaged build, and
+  **Add build folder…** uses a build folder as it is. See [For developers](../developers/).
 
-Pick a version and **Set active**. The active version's extractor and game are the ones the launcher runs.
+Pick a version and click **Set active** to play it. If a version needs the game data prepared differently, the
+launcher offers to re-extract it.
 
-## Installing the game data
+## Adding the game
 
-Select **Ratchet & Clank** in the sidebar and choose **Install via ISO**, then pick the image of your disc. The
-extractor then:
+Select **Ratchet & Clank** in the sidebar, choose **Install via ISO** and pick your disc image. The launcher then:
 
-1. **identifies** the disc (serial, region, version) and refuses unsupported ones;
-2. **copies** the data, about 4.5 GB, checking every file's size and SHA-1 as it goes;
-3. **prepares** it: builds a cache of decompressed data so levels load faster.
+1. checks that it's a [supported disc](../supported-versions/);
+2. copies the game data (about 4.5 GB) and checks every file against the original;
+3. prepares the data so levels load faster.
 
-Cancelling is safe: a half-finished extraction is never mistaken for a complete one, and the next run starts clean.
+You can cancel at any time. Next time, it simply starts over.
 
 ## Playing
 
-Press **Play**. The launcher starts the game with the extracted data and shows *Running…* until it exits. If the game
-cannot start, the launcher says why, and offers **Re-extract** when the data is missing, incomplete or made for
-another version.
+Press **Play**. If the game can't start, the launcher tells you why, and offers **Re-extract** when the game data is
+missing or incomplete.
 
 ## The ⋯ menu
 
-The game screen's **⋯** menu has:
-
-- **Export assets…** writes your extracted data in usable formats: textures (PNG), audio (WAV), models and levels
-  (glTF), collision, and text (JSON). The game never reads the exports.
-- **Re-extract from ISO** runs the extraction again from your disc image.
+- **Export assets…** saves the game's textures, sounds, models, levels and text from your own game data, as PNG, WAV,
+  glTF and JSON files. The game itself never uses these copies.
+- **Re-extract from ISO** adds the game again from your disc image.
 
 ## Folders
 
-The launcher keeps everything in one data folder, named `rerac`:
+The launcher keeps everything in one folder, named `rerac`:
 
-| System | Default data folder |
+| System | Default folder |
 |---|---|
 | Windows | `C:\Users\<YOUR_USER_NAME>\AppData\Local\rerac` |
 | Linux | `/home/<YOUR_USER_NAME>/.local/share/rerac` (or `$XDG_DATA_HOME/rerac`) |
@@ -55,9 +52,9 @@ Inside it:
 
 | Folder | Holds |
 |---|---|
-| `versions/` | installed game versions |
-| `games/rac1/data/` | the extracted game data |
-| `logs/` | one log file per extraction, verification, export and game session |
-| `settings/` | settings |
+| `versions/` | the installed versions of ReRAC |
+| `games/rac1/data/` | the game data from your disc |
+| `logs/` | the [log files](../troubleshooting/#find-the-logs) |
+| `settings/` | your settings |
 
-You can move the data folder in **Settings → Folders**; everything, logs included, moves with it.
+To move it, use **Settings → Folders**. Everything, logs included, moves with it.

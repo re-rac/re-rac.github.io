@@ -33,12 +33,12 @@ The build works offline: without network access (or without releases) it falls b
 
 | Path | What |
 |---|---|
-| `src/config.ts` | **The one config file:** GitHub `org`, `launcherRepo`, `gameRepo`, `siteUrl`, base path, the download switches, the stable download asset names per platform, the supported disc, and the `thirdPartyArt` toggles |
+| `src/config.ts` | **The one config file:** GitHub `org`, `launcherRepo`, `gameRepo`, `siteUrl`, base path, the download switches, the stable download asset names per platform, and the `thirdPartyArt` toggles |
 | `src/pages/index.astro` | Home page |
 | `src/pages/docs/changelog.astro` | Changelog, built from both repos' GitHub releases (`/changelog` redirects here) |
 | `src/content/docs/docs/*.md(x)` | Docs pages (Starlight). The sidebar is in `astro.config.ts` |
 | `src/lib/releases.ts` | Build-time GitHub release fetch, with the fallback |
-| `src/components/` | Home page parts: download CTA (`DownloadCtaScript.astro` is the only client script: OS detection, loaded only when the download is live), space scene, panels, ticker |
+| `src/components/` | Home page parts: download CTA (`DownloadCtaScript.astro` is the only client script: OS detection, loaded only when the download is live), space scene, panels |
 | `src/starlight/` | Starlight overrides: site title, footer, header download button, single dark theme |
 | `src/styles/` | `tokens.css` (colours, fonts) shared by home and docs; `site.css` (home); `starlight.css` (docs theme) |
 | `src/data/screenshots.ts` | The home page screenshot slots; fill them here |
@@ -75,10 +75,11 @@ the page). Both are `false` until the launcher has real releases.
 | Constant | `false` (now) | `true` |
 |---|---|---|
 | `launcherDownloadEnabled` | The button reads **Coming soon**, has no link, is `aria-disabled` and styled neutral; the OS-detection script is not loaded | The button reads **Download the Launcher** and, with a release, points at the installer for the visitor's OS (see [Release data](#release-data)) |
-| `showPlatformDownloads` | Nothing under the button | The latest-release line, one card per platform (a platform without an asset says "Coming soon") and the supported-disc note |
+| `showPlatformDownloads` | Nothing under the button | The latest-release line, one card per platform (a platform without an asset says "Coming soon") and a short note linking to the supported versions |
 
 When the first launcher release is published, set both to `true` and rebuild. The release fetch runs either way, so the
-changelog is unaffected. The supported disc stays on the page regardless, in the *What is ReRAC?* section and the FAQ.
+changelog is unaffected. The supported disc (region, serial, version) is named only in the docs: *Supported versions*,
+the FAQ and *Dumping your disc*.
 
 ## Release data
 
@@ -170,6 +171,6 @@ This repo is `re-rac/re-rac.github.io`; a fork replaces that with its own owner 
 - **Docs:** add or edit Markdown in `src/content/docs/docs/`, then add the page to the `sidebar` in
   `astro.config.ts`. Link between docs pages with relative links (`../faq/`) so they work under any base path.
 - **Screenshots:** put your own captures of ReRAC in `src/assets/screenshots/` and list them in
-  `src/data/screenshots.ts`. Until then the home page shows framed "Screenshot coming soon" slots.
-- **Status:** the home page's *Current status* block is copied from the game README's *Current status* section; update
-  both together.
+  `src/data/screenshots.ts`. The screenshot row under *What is ReRAC?* appears once at least one slot has an image.
+- **Status:** the home page's *Where it stands* block is a plain-language summary of the game README's *Current
+  status* section; update both together, and the date under it.
