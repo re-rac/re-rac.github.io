@@ -1,0 +1,23 @@
+# build output
+dist/
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+
+# environment
+.env
+.env.*
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# third-party game art: kept locally, not published until the owner approves it
+# (see src/assets/third-party/README.md)
+src/assets/third-party/*
+!src/assets/third-party/README.md

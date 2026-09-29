@@ -1,0 +1,26 @@
+---
+import { gameRepoUrl } from '../config';
+import { link } from '../lib/url';
+import Wordmark from './Wordmark.astro';
+---
+
+<header class="site-header">
+	<a class="skip-link" href="#main">Skip to content</a>
+	<div class="site-header__bar container">
+		<a href={link('')} class="site-header__brand" aria-label="ReRAC home">
+			<Wordmark alt="" loading="eager" />
+		</a>
+		<nav aria-label="Main" class="site-header__nav">
+			<ul>
+				<li class="hide-sm"><a href={link('#what')}>About</a></li>
+				<li class="hide-sm"><a href={link('#status')}>Status</a></li>
+				<li class="hide-sm"><a href={link('docs/faq/')}>FAQ</a></li>
+				<li><a href={link('docs/')}>Docs</a></li>
+				<li class="hide-xs"><a href={link('docs/changelog/')}>Changelog</a></li>
+				<li class="hide-sm"><a href={gameRepoUrl}>GitHub</a></li>
+			</ul>
+			<a class="btn btn--small btn--bolt" href={link('#download')}>Download</a>
+		</nav>
+	</div>
+	<div class="site-header__stripe" aria-hidden="true"></div>
+</header>

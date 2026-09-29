@@ -1,0 +1,54 @@
+---
+// The ReRAC logo (src/assets/brand/rerac-logo.png), sized by height and served as an optimised WebP.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import logo from '../assets/brand/rerac-logo.png';
+
+interface Props {
+	size?: 'sm' | 'md' | 'hero';
+	/** Another copy of the logo, e.g. Starlight's configured logo. Defaults to the brand file. */
+	src?: ImageMetadata;
+	/** Empty when a surrounding link or heading already names the site. */
+	alt?: string;
+	loading?: 'eager' | 'lazy';
+}
+const { size = 'sm', src = logo, alt = 'ReRAC', loading = 'lazy' } = Astro.props;
+// Rendered heights in CSS px; the image is generated at twice that for high-density screens.
+const heights = { sm: 44, md: 64, hero: 260 };
+const height = heights[size];
+const width = Math.round((height * src.width) / src.height);
+---
+
+<Image
+	class:list={['wordmark', `wordmark--${size}`]}
+	src={src}
+	alt={alt}
+	width={width}
+	height={height}
+	densities={[1, 2]}
+	format="webp"
+	quality={size === 'hero' ? 85 : 80}
+	loading={loading}
+	fetchpriority={loading === 'eager' ? 'high' : undefined}
+/>
+
+<style>
+	.wordmark {
+		display: block;
+		width: auto;
+		max-width: 100%;
+		/* No filter at the small sizes: over the translucent, backdrop-blurred headers Chrome clips a filtered
+		   image's glow to a visible box, and the logo's own dark rim already separates it from the background. */
+	}
+	.wordmark--sm {
+		height: 2.75rem;
+	}
+	.wordmark--md {
+		height: 4rem;
+	}
+	.wordmark--hero {
+		height: auto;
+		width: min(100%, 31rem);
+		filter: drop-shadow(0 12px 30px rgb(0 0 0 / 0.65)) drop-shadow(0 0 42px rgb(255 140 40 / 0.26));
+	}
+</style>

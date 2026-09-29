@@ -1,0 +1,73 @@
+# Build the site and deploy it to GitHub Pages.
+#
+# Runs on a push to main, by hand, nightly (to pick up new releases), and when another repo sends a
+# `release-published` repository_dispatch event (see README.md, "Rebuild from another repository").
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  repository_dispatch:
+    types: [release-published]
+  schedule:
+    - cron: '17 3 * * *' # nightly, 03:17 UTC
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v6
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          # Where the site is served. configure-pages reports the Pages URL; an org/user site
+          # (https://<org>.github.io) has base "/", a project site has base "/<repo>".
+          # Repository variables SITE_URL / SITE_BASE override both (for example for a custom domain).
+          SITE_URL: ${{ vars.SITE_URL || steps.pages.outputs.origin }}
+          SITE_BASE: ${{ vars.SITE_BASE || steps.pages.outputs.base_path || '/' }}
+          # GitHub owner of the game and launcher repos (default in src/config.ts: re-rac).
+          RERAC_ORG: ${{ vars.RERAC_ORG }}
+          # Read access to the release lists. The workflow token only sees this repo, so for private
+          # game/launcher repos add a fine-grained token as the secret RELEASES_TOKEN.
+          GITHUB_TOKEN: ${{ secrets.RELEASES_TOKEN || secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

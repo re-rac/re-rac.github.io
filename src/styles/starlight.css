@@ -1,0 +1,175 @@
+/* Starlight theme: map the ReRAC tokens onto Starlight's variables, then add the hardware touches. */
+
+:root,
+:root[data-theme='dark'] {
+	--sl-font: var(--rc-font-body);
+	--sl-font-system-mono: var(--rc-font-mono);
+
+	--sl-color-accent-low: #3a2206;
+	--sl-color-accent: #ffa617;
+	--sl-color-accent-high: #ffd76a;
+
+	--sl-color-white: #ffffff;
+	--sl-color-gray-1: #e6eaff;
+	--sl-color-gray-2: #c3cbec;
+	--sl-color-gray-3: #97a3cf;
+	--sl-color-gray-4: #5d6a93;
+	--sl-color-gray-5: #2a3568;
+	--sl-color-gray-6: #121a45;
+	--sl-color-black: #070b1f;
+
+	--sl-color-bg-nav: rgb(5 8 22 / 0.92);
+	--sl-color-bg-sidebar: #080d26;
+	--sl-color-hairline-light: #2a3568;
+	--sl-color-hairline-shade: #03050f;
+
+	--sl-color-text-accent: var(--rc-bolt-300);
+	--sl-color-blue: var(--rc-blue-400);
+	--sl-color-blue-low: #0d2a55;
+	--sl-color-blue-high: #bfe3ff;
+	--sl-color-green-low: #0b3a36;
+	--sl-color-green: var(--rc-teal-400);
+	--sl-color-green-high: #c8fff5;
+	--sl-color-orange-low: #3a2206;
+	--sl-color-orange: var(--rc-bolt-400);
+	--sl-color-orange-high: #ffe3a0;
+
+	--sl-nav-height: 4rem;
+}
+
+body {
+	background:
+		radial-gradient(ellipse 70% 40% at 80% -5%, rgb(76 60 200 / 0.22), transparent 70%),
+		radial-gradient(ellipse 50% 30% at 10% 0%, rgb(25 201 176 / 0.1), transparent 70%),
+		var(--rc-space-900);
+	background-attachment: fixed;
+}
+
+/* header: a hazard-edged instrument bar */
+header.header::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: -1px;
+	height: 2px;
+	background: linear-gradient(90deg, transparent, var(--rc-bolt-500) 20%, var(--rc-teal-400) 60%, var(--rc-blue-500) 85%, transparent);
+	opacity: 0.8;
+}
+
+/* headings in the display face */
+.sl-markdown-content :is(h1, h2, h3, h4),
+h1#_top {
+	font-family: var(--rc-font-display);
+	font-weight: 400;
+	letter-spacing: 0.01em;
+}
+h1#_top {
+	background: linear-gradient(180deg, #fff 0%, var(--rc-steel-200) 60%, var(--rc-steel-400));
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}
+.sl-markdown-content h2 {
+	color: var(--rc-text);
+}
+.sl-markdown-content h2::before {
+	content: '';
+	display: inline-block;
+	vertical-align: 0.2em;
+	margin-inline-end: 0.7rem;
+	width: 0.5rem;
+	height: 0.5rem;
+	background: var(--rc-bolt-400);
+	box-shadow: 0 0 10px rgb(255 166 23 / 0.7);
+	transform: rotate(45deg);
+}
+
+/* sidebar */
+.sidebar-content summary .group-label .large {
+	font-family: var(--rc-font-display);
+	font-weight: 400;
+	font-size: 0.8rem;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--rc-bolt-400);
+}
+.sidebar-content a[aria-current='page'] {
+	--bev: 6px;
+	color: var(--rc-space-950);
+	background: var(--rc-grad-bolt);
+	font-weight: 600;
+	clip-path: polygon(var(--bev) 0, 100% 0, 100% calc(100% - var(--bev)), calc(100% - var(--bev)) 100%, 0 100%, 0 var(--bev));
+}
+
+/* asides as panels */
+.starlight-aside {
+	--bev: 10px;
+	border-inline-start-width: 4px;
+	clip-path: polygon(0 0, calc(100% - var(--bev)) 0, 100% var(--bev), 100% 100%, 0 100%);
+}
+.starlight-aside__title {
+	font-family: var(--rc-font-display);
+	font-weight: 400;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	font-size: var(--sl-text-sm);
+}
+
+/* tables with a steel header */
+.sl-markdown-content table th {
+	font-family: var(--rc-font-display);
+	font-weight: 400;
+	letter-spacing: 0.06em;
+	background: var(--rc-space-800);
+	color: var(--rc-bolt-300);
+}
+
+/* inline code */
+.sl-markdown-content :not(pre) > code {
+	background: rgb(31 143 255 / 0.12);
+	border: 1px solid rgb(76 184 255 / 0.25);
+	color: #d7ecff;
+}
+
+/* kbd */
+.sl-markdown-content kbd {
+	display: inline-block;
+	min-width: 1.6em;
+	padding: 0.05em 0.45em;
+	font-family: var(--rc-font-mono);
+	font-size: 0.85em;
+	text-align: center;
+	color: var(--rc-text);
+	background: linear-gradient(180deg, #2a3876, #141d4c);
+	border-radius: 4px;
+	box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.2), 0 2px 0 #03050f;
+}
+
+/* pagination links */
+.pagination-links a {
+	--bev: 10px;
+	border-radius: 0;
+	clip-path: polygon(var(--bev) 0, 100% 0, 100% calc(100% - var(--bev)), calc(100% - var(--bev)) 100%, 0 100%, 0 var(--bev));
+	background: linear-gradient(180deg, rgb(23 34 90 / 0.6), rgb(11 17 48 / 0.85));
+	box-shadow: none;
+}
+
+:focus-visible {
+	outline: 3px solid var(--rc-teal-400);
+	outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	* {
+		animation: none !important;
+		transition: none !important;
+	}
+}
+
+/* mobile menu toggle: a bolt-gold button instead of Starlight's white circle */
+starlight-menu-button button {
+	background: var(--rc-grad-bolt);
+	color: var(--rc-space-950);
+	box-shadow: 0 0 14px rgb(255 166 23 / 0.35);
+}

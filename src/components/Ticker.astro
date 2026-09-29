@@ -1,0 +1,22 @@
+---
+/** An LED ticker strip between hazard bars. The duplicate run is hidden from assistive tech. */
+interface Props {
+	items: string[];
+}
+const { items } = Astro.props;
+---
+
+<div class="ticker" role="region" aria-label="Key facts">
+	<div class="hazard hazard--thin" aria-hidden="true"></div>
+	<div class="ticker__window">
+		<div class="ticker__track">
+			<ul class="ticker__run">
+				{items.map((t) => <li>{t}</li>)}
+			</ul>
+			<ul class="ticker__run" aria-hidden="true">
+				{items.map((t) => <li>{t}</li>)}
+			</ul>
+		</div>
+	</div>
+	<div class="hazard hazard--thin" aria-hidden="true"></div>
+</div>

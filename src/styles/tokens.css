@@ -1,0 +1,45 @@
+/*
+ * Design tokens shared by the home page and the Starlight docs.
+ * Colour language: deep-space navy, bolt gold and orange, electric blue and teal accents.
+ */
+:root {
+	--rc-space-950: #03050f;
+	--rc-space-900: #070b1f;
+	--rc-space-850: #0b1130;
+	--rc-space-800: #0f1740;
+	--rc-space-700: #17225a;
+	--rc-space-600: #22307a;
+
+	--rc-steel-500: #5d6a93;
+	--rc-steel-400: #8190bd;
+	--rc-steel-300: #aab5da;
+	--rc-steel-200: #cfd6f0;
+
+	--rc-bolt-300: #ffd76a;
+	--rc-bolt-400: #ffc233;
+	--rc-bolt-500: #ffa617;
+	--rc-orange-500: #ff7a1a;
+	--rc-orange-600: #e2560f;
+
+	--rc-blue-400: #4cb8ff;
+	--rc-blue-500: #1f8fff;
+	--rc-teal-400: #3ff0d2;
+	--rc-teal-500: #19c9b0;
+
+	--rc-text: #eef1ff;
+	--rc-text-muted: #b3bddf;
+	--rc-text-dim: #8b96bf;
+
+	--rc-font-display: 'Russo One', 'Exo 2', system-ui, sans-serif;
+	--rc-font-body: 'Exo 2', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+	--rc-font-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace;
+
+	--rc-grad-bolt: linear-gradient(180deg, var(--rc-bolt-300) 0%, var(--rc-bolt-500) 45%, var(--rc-orange-600) 100%);
+	--rc-hazard: repeating-linear-gradient(
+		-45deg,
+		var(--rc-bolt-500) 0 12px,
+		var(--rc-space-950) 12px 24px
+	);
+	--rc-bevel: 14px;
+	--rc-focus: 0 0 0 3px var(--rc-space-900), 0 0 0 5px var(--rc-teal-400);
+}

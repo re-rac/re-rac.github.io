@@ -1,0 +1,20 @@
+---
+/**
+ * A Gadgetron-style hardware panel: bevelled corners, a steel frame and four rivets.
+ * `tone` tints the frame; `as` picks the element.
+ */
+interface Props {
+	as?: 'div' | 'section' | 'article' | 'aside' | 'li';
+	tone?: 'steel' | 'bolt' | 'teal';
+	class?: string;
+	id?: string;
+	'aria-labelledby'?: string;
+}
+const { as: Tag = 'div', tone = 'steel', class: className, ...rest } = Astro.props;
+---
+
+<Tag class:list={['panel', `panel--${tone}`, className]} {...rest}>
+	<div class="panel__inner">
+		<slot />
+	</div>
+</Tag>

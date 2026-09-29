@@ -1,0 +1,114 @@
+/**
+ * The one place for the site's GitHub names, URLs and download asset names.
+ *
+ * Change `org` here (or set the env vars below at build time) and every link, download button and release
+ * fetch follows. The site itself is the repo `re-rac/re-rac.github.io`, served at https://re-rac.github.io.
+ *
+ * Build-time env overrides (all optional):
+ *   RERAC_ORG       GitHub owner of the repos                 (default: "re-rac")
+ *   SITE_URL        Origin the site is served from             (default: https://<org>.github.io)
+ *   SITE_BASE       Path prefix, "/" for an org/user Pages site or a custom domain,
+ *                   "/<repo>" for a project Pages site          (default: "/")
+ *   GITHUB_TOKEN    Raises the GitHub API rate limit for the release fetch
+ *   RELEASES_OFFLINE=1  Skip the release fetch and use the placeholder data
+ */
+
+const env = (typeof process !== 'undefined' ? process.env : {}) as Record<string, string | undefined>;
+
+export const org = env.RERAC_ORG || 're-rac';
+export const launcherRepo = 'rerac-launcher';
+export const gameRepo = 'rerac';
+
+export const siteUrl = (env.SITE_URL || `https://${org}.github.io`).replace(/\/+$/, '');
+/** Always starts and ends with "/". */
+export const siteBase = normaliseBase(env.SITE_BASE || '/');
+
+export const siteName = 'ReRAC';
+/** Follows the name in the home page title. */
+export const siteSubtitle = 'An unofficial native PC port of Ratchet & Clank (2002)';
+export const siteTagline = 'Ratchet & Clank (PS2, 2002), rebuilt natively for PC.';
+export const siteDescription =
+	'ReRAC is an unofficial native PC port of Ratchet & Clank (PS2, 2002), built in Rust and Bevy from a decompilation. Not an emulator. Bring your own disc.';
+
+/**
+ * Which pieces of the art in src/assets/third-party/ the pages use. Both false ships only original art.
+ *   logo        the Ratchet & Clank (2002) logo, shown small under the ReRAC logo in the home page hero
+ *   background  the in-game scene in the home page hero's "monitor" panel
+ */
+export const thirdPartyArt = {
+	logo: false,
+	background: true,
+};
+
+export const repoUrl = (repo: string) => `https://github.com/${org}/${repo}`;
+export const launcherRepoUrl = repoUrl(launcherRepo);
+export const gameRepoUrl = repoUrl(gameRepo);
+export const gameReadmeUrl = `${gameRepoUrl}#readme`;
+export const launcherReleasesUrl = `${launcherRepoUrl}/releases`;
+
+export type PlatformId = 'macos-arm64' | 'macos-x64' | 'windows-x64' | 'linux-x86_64';
+export type OsFamily = 'macos' | 'windows' | 'linux';
+
+export interface Platform {
+	id: PlatformId;
+	os: OsFamily;
+	label: string;
+	detail: string;
+	/** Stable asset name every launcher release must attach. */
+	asset: string;
+	/** True only where the launcher and game have actually been built and run. */
+	tested: boolean;
+}
+
+/** The stable asset names. A release that attaches these makes the buttons below work. */
+export const platforms: Platform[] = [
+	{
+		id: 'macos-arm64',
+		os: 'macos',
+		label: 'macOS',
+		detail: 'Apple Silicon',
+		asset: 'rerac-launcher-macos-arm64.dmg',
+		tested: true,
+	},
+	{
+		id: 'macos-x64',
+		os: 'macos',
+		label: 'macOS',
+		detail: 'Intel',
+		asset: 'rerac-launcher-macos-x64.dmg',
+		tested: false,
+	},
+	{
+		id: 'windows-x64',
+		os: 'windows',
+		label: 'Windows',
+		detail: 'x64 installer',
+		asset: 'rerac-launcher-windows-x64.msi',
+		tested: false,
+	},
+	{
+		id: 'linux-x86_64',
+		os: 'linux',
+		label: 'Linux',
+		detail: 'x86_64 AppImage',
+		asset: 'rerac-launcher-linux-x86_64.AppImage',
+		tested: false,
+	},
+];
+
+export const latestDownloadUrl = (asset: string) =>
+	`https://github.com/${org}/${launcherRepo}/releases/latest/download/${asset}`;
+
+export const supportedDisc = {
+	title: 'Ratchet & Clank',
+	region: 'NTSC-U',
+	serial: 'SCUS-97199',
+	version: '1.00',
+};
+
+function normaliseBase(base: string): string {
+	let b = base.trim();
+	if (!b.startsWith('/')) b = '/' + b;
+	if (!b.endsWith('/')) b = b + '/';
+	return b.replace(/\/{2,}/g, '/');
+}

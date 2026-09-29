@@ -1,0 +1,66 @@
+<!doctype html>
+<!--
+  Source of public/og.png (1200x630): the ReRAC logo (src/assets/brand/rerac-logo.png) on original art only. To
+  regenerate, open this file in a browser at 1200x630 and screenshot the page, e.g. with Playwright:
+    npx playwright screenshot --viewport-size=1200,630 scripts/og-image.html public/og.png
+-->
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  @font-face { font-family: 'Russo One'; src: url('../src/assets/fonts/russo-one/russo-one-latin-400-normal.woff2') format('woff2'); }
+  @font-face { font-family: 'Exo 2'; font-weight: 100 900; src: url('../src/assets/fonts/exo-2/exo-2-latin-wght-normal.woff2') format('woff2-variations'); }
+  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    position: relative;
+    font-family: 'Exo 2', sans-serif;
+    color: #eef1ff;
+    background:
+      radial-gradient(ellipse 60% 55% at 15% 20%, rgb(76 60 200 / 0.45), transparent 70%),
+      radial-gradient(ellipse 45% 45% at 88% 30%, rgb(25 201 176 / 0.22), transparent 70%),
+      linear-gradient(180deg, #03050f, #070b1f 55%, #0b1130);
+  }
+  #stars { position: absolute; inset: 0; }
+  .horizon { position: absolute; left: 0; bottom: 0; width: 1200px; height: 300px; }
+  .copy { position: absolute; left: 80px; top: 70px; }
+  .chip { display: inline-block; padding: 8px 16px; font: 18px 'Russo One'; letter-spacing: .16em; text-transform: uppercase; color: #3ff0d2; border: 1.5px solid rgb(63 240 210 / .45); background: rgb(10 20 55 / .7); }
+  .logo { display: block; width: 600px; height: auto; margin: 26px 0 0 -10px; filter: drop-shadow(0 14px 30px rgb(0 0 0 / .65)) drop-shadow(0 0 46px rgb(255 140 40 / .28)); }
+  .tag { margin-top: 20px; font-size: 29px; color: #cfd6f0; }
+  .tag em { font-style: normal; font-weight: 700; color: #ffd76a; }
+  .hazard { position: absolute; left: 0; right: 0; bottom: 0; height: 14px; background: repeating-linear-gradient(-45deg, #ffa617 0 16px, #03050f 16px 32px); }
+</style>
+</head>
+<body>
+<svg id="stars" viewBox="0 0 1200 630"></svg>
+<svg style="position:absolute; right:70px; top:60px" width="260" height="260" viewBox="0 0 400 400">
+  <defs>
+    <radialGradient id="g" cx=".36" cy=".32" r=".75"><stop offset="0" stop-color="#ffd27a"/><stop offset=".45" stop-color="#f08a2a"/><stop offset=".8" stop-color="#8a2f1a"/><stop offset="1" stop-color="#2a0f18"/></radialGradient>
+    <linearGradient id="r" x1="0" x2="1"><stop offset="0" stop-color="#ffe3a0" stop-opacity="0"/><stop offset=".25" stop-color="#ffe3a0" stop-opacity=".8"/><stop offset=".6" stop-color="#8fe9ff" stop-opacity=".55"/><stop offset="1" stop-color="#8fe9ff" stop-opacity="0"/></linearGradient>
+  </defs>
+  <circle cx="200" cy="200" r="92" fill="url(#g)"/>
+  <g transform="rotate(-18 200 200)"><path d="M22 200 A178 34 0 0 0 378 200" fill="none" stroke="url(#r)" stroke-width="10"/></g>
+</svg>
+<svg class="horizon" viewBox="0 0 1200 300" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="rim" x1="0" x2="1"><stop offset="0" stop-color="#ffb347"/><stop offset=".3" stop-color="#3ff0d2"/><stop offset=".7" stop-color="#4cb8ff"/><stop offset="1" stop-color="#6a5bff"/></linearGradient>
+    <radialGradient id="surf" cx=".5" cy="0" r="1"><stop offset="0" stop-color="#1c3b8f"/><stop offset=".2" stop-color="#0a1438"/><stop offset="1" stop-color="#03050f"/></radialGradient>
+    <filter id="b" x="-10%" y="-200%" width="120%" height="500%"><feGaussianBlur stdDeviation="12"/></filter>
+  </defs>
+  <ellipse cx="600" cy="1250" rx="1300" ry="1040" fill="none" stroke="url(#rim)" stroke-width="30" filter="url(#b)"/>
+  <ellipse cx="600" cy="1250" rx="1300" ry="1040" fill="url(#surf)"/>
+  <ellipse cx="600" cy="1250" rx="1300" ry="1040" fill="none" stroke="url(#rim)" stroke-width="2.5"/>
+</svg>
+<div class="copy">
+  <span class="chip">Unofficial · native PC port</span>
+  <img class="logo" src="../src/assets/brand/rerac-logo.png" alt="ReRAC" />
+  <div class="tag">Ratchet &amp; Clank (PS2, 2002), rebuilt natively for PC. <em>Not an emulator.</em></div>
+</div>
+<div class="hazard"></div>
+<script>
+  let s = 7; const r = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+  let h = '';
+  for (let i = 0; i < 260; i++) h += `<circle cx="${r()*1200}" cy="${r()*630}" r="${0.4 + r()*1.4}" fill="#fff" fill-opacity="${0.3 + r()*0.7}"/>`;
+  document.getElementById('stars').innerHTML = h;
+</script>
+</body>
+</html>

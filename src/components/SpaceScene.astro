@@ -1,0 +1,128 @@
+---
+/**
+ * Original art: a three-layer drifting starfield, nebula glows, a ringed gas giant and a planet horizon.
+ * Stars are generated at build time from a fixed seed, so the page ships no script for them.
+ * Motion is transform-only and stops under prefers-reduced-motion.
+ */
+interface Props {
+	horizon?: boolean;
+	class?: string;
+}
+const { horizon = true, class: className } = Astro.props;
+
+function mulberry32(seed: number) {
+	return () => {
+		seed |= 0;
+		seed = (seed + 0x6d2b79f5) | 0;
+		let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+		t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+		return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+	};
+}
+
+function starTile(seed: number, size: number, count: number, rMin: number, rMax: number, glow: boolean) {
+	const rnd = mulberry32(seed);
+	const palette = ['#ffffff', '#dfe8ff', '#bfe3ff', '#fff1c9', '#a9fff0'];
+	let circles = '';
+	for (let i = 0; i < count; i++) {
+		const x = (rnd() * size).toFixed(1);
+		const y = (rnd() * size).toFixed(1);
+		const r = (rMin + rnd() * (rMax - rMin)).toFixed(2);
+		const o = (0.45 + rnd() * 0.55).toFixed(2);
+		const c = palette[Math.floor(rnd() * palette.length)];
+		circles += `<circle cx='${x}' cy='${y}' r='${r}' fill='${c}' fill-opacity='${o}'/>`;
+		if (glow) circles += `<circle cx='${x}' cy='${y}' r='${(Number(r) * 3.2).toFixed(2)}' fill='${c}' fill-opacity='0.12'/>`;
+	}
+	const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${size}' height='${size}' viewBox='0 0 ${size} ${size}'>${circles}</svg>`;
+	return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+}
+
+const layers = [
+	{ size: 420, img: starTile(7, 420, 150, 0.35, 0.9, false) },
+	{ size: 700, img: starTile(19, 700, 70, 0.7, 1.4, false) },
+	{ size: 1100, img: starTile(42, 1100, 24, 1.1, 2.1, true) },
+];
+---
+
+<div class:list={['scene', className]} aria-hidden="true">
+	<div class="scene__nebula"></div>
+	{
+		layers.map((l, i) => (
+			<div
+				class={`scene__stars scene__stars--${i}`}
+				style={`--tile:${l.size}px;background-image:${l.img};background-size:${l.size}px ${l.size}px;`}
+			/>
+		))
+	}
+
+	<!-- Ringed gas giant, far away -->
+	<svg class="scene__giant" viewBox="0 0 400 400">
+		<defs>
+			<radialGradient id="giant-body" cx="0.36" cy="0.32" r="0.75">
+				<stop offset="0" stop-color="#ffd27a" />
+				<stop offset="0.45" stop-color="#f08a2a" />
+				<stop offset="0.8" stop-color="#8a2f1a" />
+				<stop offset="1" stop-color="#2a0f18" />
+			</radialGradient>
+			<linearGradient id="giant-ring" x1="0" y1="0" x2="1" y2="0">
+				<stop offset="0" stop-color="#ffe3a0" stop-opacity="0" />
+				<stop offset="0.25" stop-color="#ffe3a0" stop-opacity="0.75" />
+				<stop offset="0.6" stop-color="#8fe9ff" stop-opacity="0.5" />
+				<stop offset="1" stop-color="#8fe9ff" stop-opacity="0" />
+			</linearGradient>
+			<clipPath id="giant-clip"><circle cx="200" cy="200" r="92" /></clipPath>
+			<clipPath id="ring-back"><rect x="0" y="0" width="400" height="200" /></clipPath>
+		</defs>
+		<g transform="rotate(-18 200 200)">
+			<ellipse cx="200" cy="200" rx="178" ry="34" fill="none" stroke="url(#giant-ring)" stroke-width="10" clip-path="url(#ring-back)" opacity="0.8" />
+		</g>
+		<circle cx="200" cy="200" r="92" fill="url(#giant-body)" />
+		<g clip-path="url(#giant-clip)" opacity="0.35">
+			<path d="M90 160 Q200 140 310 170" stroke="#fff3cf" stroke-width="7" fill="none" />
+			<path d="M90 196 Q200 180 310 206" stroke="#7a2412" stroke-width="10" fill="none" />
+			<path d="M90 232 Q200 222 310 244" stroke="#ffcf8a" stroke-width="5" fill="none" />
+		</g>
+		<circle cx="200" cy="200" r="92" fill="none" stroke="#ffe6b0" stroke-opacity="0.35" stroke-width="2" />
+		<g transform="rotate(-18 200 200)">
+			<path d="M22 200 A178 34 0 0 0 378 200" fill="none" stroke="url(#giant-ring)" stroke-width="10" />
+		</g>
+		<circle cx="330" cy="92" r="9" fill="#9fb4ff" opacity="0.8" />
+		<circle cx="327" cy="89" r="9" fill="#3a4a8a" opacity="0.6" />
+	</svg>
+
+	{
+		horizon && (
+			<svg class="scene__horizon" viewBox="0 0 1600 420" preserveAspectRatio="xMidYMax slice">
+				<defs>
+					<radialGradient id="planet-surface" cx="0.5" cy="0" r="1" fx="0.3" fy="0">
+						<stop offset="0" stop-color="#1c3b8f" />
+						<stop offset="0.05" stop-color="#11235e" />
+						<stop offset="0.25" stop-color="#0a1438" />
+						<stop offset="1" stop-color="#03050f" />
+					</radialGradient>
+					<linearGradient id="planet-rim" x1="0" y1="0" x2="1" y2="0">
+						<stop offset="0" stop-color="#ffb347" />
+						<stop offset="0.3" stop-color="#3ff0d2" />
+						<stop offset="0.7" stop-color="#4cb8ff" />
+						<stop offset="1" stop-color="#6a5bff" />
+					</linearGradient>
+					<filter id="rim-blur" x="-10%" y="-200%" width="120%" height="500%">
+						<feGaussianBlur stdDeviation="14" />
+					</filter>
+					<clipPath id="planet-clip">
+						<circle cx="800" cy="2360" r="2080" />
+					</clipPath>
+				</defs>
+				<circle cx="800" cy="2360" r="2080" fill="none" stroke="url(#planet-rim)" stroke-width="34" filter="url(#rim-blur)" opacity="0.9" />
+				<circle cx="800" cy="2360" r="2080" fill="url(#planet-surface)" />
+				<g clip-path="url(#planet-clip)" opacity="0.5">
+					<ellipse cx="520" cy="330" rx="260" ry="16" fill="#1a3a8a" />
+					<ellipse cx="1120" cy="320" rx="340" ry="12" fill="#12306e" />
+					<ellipse cx="900" cy="372" rx="480" ry="20" fill="#0e2458" />
+					<path class="scene__citylights" d="M300 360h4M330 352h3M410 356h5M1180 346h4M1210 350h3M1290 342h5M980 366h4M700 368h3M760 362h4" stroke="#ffc233" stroke-width="2" />
+				</g>
+				<circle cx="800" cy="2360" r="2080" fill="none" stroke="url(#planet-rim)" stroke-width="2.5" />
+			</svg>
+		)
+	}
+</div>

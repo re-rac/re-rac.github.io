@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SpaceScene from '../components/SpaceScene.astro';
+import { link } from '../lib/url';
+---
+
+<BaseLayout title="Lost in space" description="This page does not exist.">
+	<section class="hero lost" aria-labelledby="lost-title">
+		<SpaceScene />
+		<div class="container lost__inner">
+			<p class="eyebrow">Error 404</p>
+			<h1 id="lost-title">Lost in space</h1>
+			<p>This page drifted off the map. Head back to base or check the docs.</p>
+			<p class="lost__actions">
+				<a class="btn btn--bolt" href={link('')}>Home</a>
+				<a class="btn btn--ghost" href={link('docs/')}>Docs</a>
+			</p>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.lost__inner {
+		text-align: center;
+	}
+	.lost h1 {
+		font-size: clamp(2.5rem, 2rem + 4vw, 5rem);
+	}
+	.lost p {
+		color: var(--rc-text-muted);
+	}
+	.lost__actions {
+		display: flex;
+		justify-content: center;
+		gap: 0.75rem;
+	}
+	.lost .eyebrow {
+		justify-content: center;
+	}
+</style>

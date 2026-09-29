@@ -1,0 +1,126 @@
+---
+/**
+ * The changelog: both repos' GitHub releases, rendered at build time and grouped by date.
+ * With no releases (or no network at build time) it says so instead of showing anything made up.
+ */
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { Aside } from '@astrojs/starlight/components';
+import { gameRepo, launcherRepo, org } from '../../config';
+import { formatDate, getChangelog } from '../../lib/releases';
+
+const days = await getChangelog();
+const headings = days.map((d) => ({ depth: 2, slug: `d-${d.date}`, text: formatDate(d.date) }));
+---
+
+<StarlightPage
+	frontmatter={{
+		title: 'Changelog',
+		description: 'Release notes for the ReRAC game and the ReRAC Launcher, newest first.',
+		tableOfContents: days.length > 0,
+	}}
+	headings={headings}
+>
+	<p>
+		Release notes for the <strong>game</strong>{' '}(<code>{org}/{gameRepo}</code>) and the <strong>launcher</strong>{' '}
+		(<code>{org}/{launcherRepo}</code>), newest first. This page is rebuilt whenever either publishes a release.
+	</p>
+
+	{
+		days.length === 0 ? (
+			<Aside type="note" title="No releases yet">
+				Nothing has been released yet. The first game and launcher releases will appear here.
+			</Aside>
+		) : (
+			days.map((day) => (
+				<section class="cl-day" aria-labelledby={`d-${day.date}`}>
+					<h2 id={`d-${day.date}`}>
+						<time datetime={day.date}>{formatDate(day.date)}</time>
+					</h2>
+					{day.entries.map((e) => (
+						<article class="cl-entry">
+							<header class="cl-entry__head">
+								<span class:list={['cl-kind', e.kind === 'Game' ? 'cl-kind--game' : 'cl-kind--launcher']}>{e.kind}</span>
+								<h3>
+									<a href={e.htmlUrl}>{e.name}</a>
+								</h3>
+								{e.name !== e.tag && <code class="cl-tag">{e.tag}</code>}
+								{e.prerelease && <span class="cl-pre">Pre-release</span>}
+							</header>
+							{e.bodyHtml ? (
+								<div class="cl-body" set:html={e.bodyHtml} />
+							) : (
+								<p class="cl-empty">No release notes.</p>
+							)}
+						</article>
+					))}
+				</section>
+			))
+		)
+	}
+</StarlightPage>
+
+<style>
+	.cl-day {
+		margin-top: 2.5rem;
+	}
+	.cl-entry {
+		--bev: 10px;
+		margin-top: 1rem;
+		padding: 1.1rem 1.25rem;
+		background: linear-gradient(180deg, rgb(23 34 90 / 0.55), rgb(11 17 48 / 0.85));
+		box-shadow: inset 0 0 0 1px rgb(129 144 189 / 0.25);
+		clip-path: polygon(0 0, calc(100% - var(--bev)) 0, 100% var(--bev), 100% 100%, var(--bev) 100%, 0 calc(100% - var(--bev)));
+	}
+	.cl-entry__head {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem 0.75rem;
+	}
+	.cl-entry__head h3 {
+		margin: 0;
+		font-size: var(--sl-text-h4);
+	}
+	.cl-kind {
+		padding: 0.1rem 0.5rem;
+		font-family: var(--rc-font-display);
+		font-size: 0.7rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		border-radius: 2px;
+	}
+	.cl-kind--game {
+		color: var(--rc-space-950);
+		background: var(--rc-grad-bolt);
+	}
+	.cl-kind--launcher {
+		color: var(--rc-space-950);
+		background: linear-gradient(180deg, #c8fff5, var(--rc-teal-400));
+	}
+	.cl-pre {
+		font-size: var(--sl-text-xs);
+		color: var(--sl-color-orange-high);
+	}
+	.cl-tag {
+		font-size: var(--sl-text-xs);
+	}
+	.cl-body {
+		margin-top: 0.75rem;
+	}
+	.cl-body :global(:is(h1, h2)) {
+		font-size: var(--sl-text-h4);
+	}
+	.cl-body :global(:is(h3, h4)) {
+		font-size: var(--sl-text-lg);
+	}
+	.cl-entry__head h3 a {
+		text-decoration: none;
+	}
+	.cl-entry__head h3 a:hover {
+		text-decoration: underline;
+	}
+	.cl-empty {
+		margin-top: 0.75rem;
+		color: var(--sl-color-gray-3);
+	}
+</style>

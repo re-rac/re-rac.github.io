@@ -1,0 +1,298 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SpaceScene from '../components/SpaceScene.astro';
+import DownloadCta from '../components/DownloadCta.astro';
+import Panel from '../components/Panel.astro';
+import Ticker from '../components/Ticker.astro';
+import ScreenshotSlot from '../components/ScreenshotSlot.astro';
+import BoltIcon from '../components/BoltIcon.astro';
+import Wordmark from '../components/Wordmark.astro';
+import { screenshots } from '../data/screenshots';
+import { gameReadmeUrl, siteName, siteTagline, supportedDisc, thirdPartyArt } from '../config';
+import { link } from '../lib/url';
+import type { ImageMetadata } from 'astro';
+
+// Third-party art (src/assets/third-party/README.md). Each piece is used only when enabled in src/config.ts, and the
+// page still builds if the files are deleted: the hero then shows only the ReRAC logo and no picture.
+const art = import.meta.glob<{ default: ImageMetadata }>('../assets/third-party/*.webp', { eager: true });
+const gameLogo = thirdPartyArt.logo ? art['../assets/third-party/rac1-logo.webp']?.default : undefined;
+const heroArt = thirdPartyArt.background ? art['../assets/third-party/rac1-bg.webp']?.default : undefined;
+
+const ticker = [
+	'Native Rust + Bevy',
+	'Not an emulator',
+	'No game assets included',
+	'Bring your own disc',
+	`${supportedDisc.region} ${supportedDisc.serial} v${supportedDisc.version}`,
+	'All 19 levels load and render',
+	'Unofficial fan project',
+];
+
+const features = [
+	{
+		title: 'Native and fast',
+		body: 'No emulation layer. Custom Bevy render pipelines with WGSL shaders derived from the game’s VU1 programs, and game logic in plain Rust.',
+		icon: 'chip',
+	},
+	{
+		title: 'Faithful to the original',
+		body: 'It must behave like the original: what you see, hear and feel. Where the PS2 hardware causes a visible effect, the port reproduces the result natively.',
+		icon: 'target',
+	},
+	{
+		title: 'Built from a decompilation',
+		body: 'The boot executable and every level’s code overlay are decompiled, and each port cites the addresses of the original functions it reproduces.',
+		icon: 'gear',
+	},
+	{
+		title: 'Its own extractor',
+		body: 'rerac-extract reads an image of your disc once, checks every file’s size and SHA-1, and writes a data folder the game reads directly.',
+		icon: 'disc',
+	},
+	{
+		title: 'Cutscenes and movies',
+		body: 'In-engine cutscenes, and the FMV movies played through ReRAC’s own MPEG-2 decoder. Sound effects and music are in too.',
+		icon: 'film',
+	},
+	{
+		title: 'Export the assets',
+		body: 'The launcher can export your extracted data as PNG, WAV, glTF and JSON: textures, audio, models, levels, collision and text.',
+		icon: 'crate',
+	},
+];
+
+const icons: Record<string, string> = {
+	chip: '<rect x="9" y="9" width="14" height="14" rx="2"/><rect x="13" y="13" width="6" height="6"/><path d="M13 5v4M19 5v4M13 23v4M19 23v4M5 13h4M5 19h4M23 13h4M23 19h4"/>',
+	target: '<circle cx="16" cy="16" r="10"/><circle cx="16" cy="16" r="5"/><path d="M16 2v6M16 24v6M2 16h6M24 16h6"/>',
+	gear: '<circle cx="16" cy="16" r="4.5"/><path d="M16 4v4M16 24v4M4 16h4M24 16h4M7.5 7.5l2.8 2.8M21.7 21.7l2.8 2.8M7.5 24.5l2.8-2.8M21.7 10.3l2.8-2.8"/><circle cx="16" cy="16" r="9"/>',
+	disc: '<circle cx="16" cy="16" r="12"/><circle cx="16" cy="16" r="3"/><path d="M16 7a9 9 0 0 1 9 9"/>',
+	film: '<rect x="4" y="7" width="24" height="18" rx="2"/><path d="M4 12h24M4 20h24M10 7v5M16 7v5M22 7v5M10 20v5M16 20v5M22 20v5"/>',
+	crate: '<path d="M16 3l11 6v14l-11 6-11-6V9z"/><path d="M5 9l11 6 11-6M16 15v14"/>',
+};
+
+const working = [
+	'All 19 levels load and render: terrain, ties and shrubs with the game’s own LOD, culling and lighting, the sky, animated objects, fog, occlusion, particles and shadows.',
+	'Novalis is the most complete level. On the other levels a growing share of objects run their ported code.',
+	'Ratchet’s movement and hero states, the wrench, the weapons and gadgets.',
+	'The sea and water, the pause menu, the HUD, the in-game map and the Gadgetron vendor.',
+	'In-engine cutscenes, FMV movies, sound effects and music.',
+];
+const missing = [
+	'Planet travel and the ship',
+	'The main menu, saving and loading',
+	'The Clank, Giant Clank and Hologuise sections',
+	'The hoverboard and races, and ship combat',
+];
+
+const faq = [
+	{
+		q: 'Is this an emulator?',
+		a: 'No. ReRAC rebuilds the game’s systems from a decompilation and runs them as native code. It does not emulate or model the PS2 hardware.',
+	},
+	{
+		q: 'Does it include the game?',
+		a: 'No. It ships no game assets and no copy of the game’s code. The launcher extracts the data from an image of your own, legally obtained disc.',
+	},
+	{
+		q: 'Which disc do I need?',
+		a: `Ratchet & Clank (2002) for PlayStation 2, ${supportedDisc.region}, ${supportedDisc.serial}, version ${supportedDisc.version}. Other regions and versions are refused for now.`,
+	},
+	{
+		q: 'Can I play it from start to finish?',
+		a: 'Not yet. It is early and in active development; planet travel, the main menu and saving are among the missing pieces.',
+	},
+];
+---
+
+<BaseLayout>
+	<!-- HERO -->
+	<section class="hero" aria-labelledby="hero-title">
+		<SpaceScene />
+		<div class:list={['container hero__grid', { 'hero__grid--solo': !heroArt }]}>
+			<div class="hero__copy">
+				<p class="chip chip--led"><span class="led led--teal" aria-hidden="true"></span>Unofficial · native PC port</p>
+				<h1 id="hero-title" class="hero__title">
+					<Wordmark size="hero" alt={siteName} loading="eager" />
+					{
+						gameLogo && (
+							<img class="hero__game-logo" src={gameLogo.src} width={gameLogo.width} height={gameLogo.height} alt="for Ratchet & Clank" />
+						)
+					}
+				</h1>
+				<p class="hero__pitch">{siteTagline} <span class="hero__pitch-em">Not an emulator.</span> Bring your own disc.</p>
+				<DownloadCta />
+			</div>
+			{
+				heroArt && (
+					<div class="hero__visual">
+						<div class="monitor">
+							<div class="monitor__screen">
+								<img src={heroArt.src} width={heroArt.width} height={heroArt.height} alt="Ratchet swinging on a grapple line above a sunlit city of towers" loading="eager" decoding="async" />
+								<div class="monitor__scan" aria-hidden="true"></div>
+							</div>
+							<div class="monitor__bar" aria-hidden="true">
+								<span class="led led--green"></span>
+								<span>VID FEED</span>
+								<span class="monitor__bar-fill"></span>
+								<span>RC-01</span>
+							</div>
+						</div>
+					</div>
+				)
+			}
+		</div>
+	</section>
+
+	<Ticker items={ticker} />
+
+	<!-- WHAT IS -->
+	<section class="section" id="what" aria-labelledby="what-title">
+		<div class="container">
+			<header class="section__head">
+				<p class="eyebrow">Briefing</p>
+				<h2 id="what-title">What is ReRAC?</h2>
+				<p class="section__lede">
+					ReRAC is an unofficial native port of Ratchet &amp; Clank (2002, PlayStation 2) to PC, in Rust, on the Bevy
+					engine. The game’s systems are rebuilt from a decompilation of the original code and run as native code.
+				</p>
+			</header>
+
+			<ol class="steps">
+				<li>
+					<Panel tone="bolt" as="div" class="step">
+						<span class="step__num" aria-hidden="true">01</span>
+						<h3>A native port</h3>
+						<p>
+							Not an emulator, not a static recompiler, and it does not model the PS2 hardware. The original game’s behaviour
+							and values, ported to Rust and running natively on your PC.
+						</p>
+					</Panel>
+				</li>
+				<li>
+					<Panel tone="teal" as="div" class="step">
+						<span class="step__num" aria-hidden="true">02</span>
+						<h3>Your own disc</h3>
+						<p>
+							ReRAC ships no game assets. You extract the game data yourself, once, from an image of your own{' '}
+							{supportedDisc.region} disc ({supportedDisc.serial}, v{supportedDisc.version}). Every file is checked by size
+							and SHA-1.
+						</p>
+					</Panel>
+				</li>
+				<li>
+					<Panel tone="steel" as="div" class="step">
+						<span class="step__num" aria-hidden="true">03</span>
+						<h3>The ReRAC Launcher</h3>
+						<p>
+							The launcher installs and updates game versions, extracts the data from your disc image and starts the game.
+							Mod management is planned on top of it.
+						</p>
+					</Panel>
+				</li>
+			</ol>
+		</div>
+	</section>
+
+	<!-- FEATURES -->
+	<section class="section section--alt" id="features" aria-labelledby="features-title">
+		<div class="container">
+			<header class="section__head">
+				<p class="eyebrow">Gadgetron catalogue</p>
+				<h2 id="features-title">Under the hood</h2>
+			</header>
+			<ul class="features">
+				{
+					features.map((f) => (
+						<li class="feature">
+							<span class="feature__icon" aria-hidden="true">
+								<svg viewBox="0 0 32 32" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={icons[f.icon]} />
+							</span>
+							<h3>{f.title}</h3>
+							<p>{f.body}</p>
+						</li>
+					))
+				}
+				<li class="feature feature--planned">
+					<span class="feature__icon" aria-hidden="true">
+						<svg viewBox="0 0 32 32" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<path d="M12 5h8v4a3 3 0 1 0 0 6v4h-4a3 3 0 1 1-6 0H5v-8h4a3 3 0 1 0 0-6z" transform="translate(3 3)" />
+						</svg>
+					</span>
+					<h3>Mods <span class="badge">Planned</span></h3>
+					<p>Real mods, installed and switched on or off through the launcher. They come last, after the game itself.</p>
+				</li>
+			</ul>
+
+			<div class="shots" aria-label="Screenshots">
+				{screenshots.map((s, i) => <ScreenshotSlot slot={s} index={i} />)}
+			</div>
+		</div>
+	</section>
+
+	<!-- STATUS -->
+	<section class="section" id="status" aria-labelledby="status-title">
+		<div class="container">
+			<Panel tone="steel" as="div" class="status">
+				<div class="status__head">
+					<div>
+						<p class="eyebrow">Diagnostics</p>
+						<h2 id="status-title">Current status</h2>
+					</div>
+					<p class="status__badge"><span class="led led--amber" aria-hidden="true"></span>Early · in active development</p>
+				</div>
+				<p class="status__lede">
+					<strong>Not playable from start to finish yet.</strong> Neither the game nor the launcher has been released. macOS
+					on Apple Silicon is the development platform and the only one tested; Windows and Linux are planned.
+				</p>
+				<div class="status__cols">
+					<div>
+						<h3><span class="led led--green" aria-hidden="true"></span>In the port</h3>
+						<ul class="checklist checklist--ok">{working.map((w) => <li>{w}</li>)}</ul>
+					</div>
+					<div>
+						<h3><span class="led led--red" aria-hidden="true"></span>Still missing</h3>
+						<ul class="checklist checklist--todo">{missing.map((m) => <li>{m}</li>)}</ul>
+					</div>
+				</div>
+				<p class="status__foot">
+					From the game repository’s README, 29 September 2026. <a href={gameReadmeUrl}>Read the full status</a>.
+				</p>
+			</Panel>
+		</div>
+	</section>
+
+	<!-- FAQ -->
+	<section class="section section--alt" id="faq" aria-labelledby="faq-title">
+		<div class="container container--narrow">
+			<header class="section__head">
+				<p class="eyebrow">Comms channel</p>
+				<h2 id="faq-title">Questions, answered</h2>
+			</header>
+			<div class="faq">
+				{
+					faq.map((f) => (
+						<details class="faq__item">
+							<summary>{f.q}</summary>
+							<p>{f.a}</p>
+						</details>
+					))
+				}
+			</div>
+			<p class="faq__more">
+				<a class="btn btn--ghost" href={link('docs/faq/')}>All questions</a>
+				<a class="btn btn--ghost" href={link('docs/getting-started/')}>Getting started</a>
+			</p>
+		</div>
+	</section>
+
+	<!-- FINAL CTA -->
+	<section class="section launchpad" aria-labelledby="launch-title">
+		<SpaceScene horizon={false} class="scene--quiet" />
+		<div class="container launchpad__inner">
+			<BoltIcon size={56} class="launchpad__bolt" />
+			<h2 id="launch-title">Ready for launch?</h2>
+			<p>Grab the launcher, point it at your disc image, and play.</p>
+			<DownloadCta id="download-again" compact />
+		</div>
+	</section>
+</BaseLayout>

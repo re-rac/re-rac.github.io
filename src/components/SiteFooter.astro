@@ -1,0 +1,46 @@
+---
+import { gameRepoUrl, launcherRepoUrl } from '../config';
+import { link } from '../lib/url';
+import Wordmark from './Wordmark.astro';
+---
+
+<footer class="site-footer">
+	<div class="hazard" aria-hidden="true"></div>
+	<div class="container site-footer__grid">
+		<div class="site-footer__brand">
+			<Wordmark />
+			<p>An unofficial native PC port of Ratchet &amp; Clank (PS2, 2002).</p>
+		</div>
+		<nav aria-label="Footer" class="site-footer__links">
+			<div>
+				<h2>Play</h2>
+				<ul>
+					<li><a href={link('#download')}>Download</a></li>
+					<li><a href={link('docs/getting-started/')}>Getting started</a></li>
+					<li><a href={link('docs/troubleshooting/')}>Troubleshooting</a></li>
+					<li><a href={link('docs/faq/')}>FAQ</a></li>
+				</ul>
+			</div>
+			<div>
+				<h2>Project</h2>
+				<ul>
+					<li><a href={gameRepoUrl}>Game repository</a></li>
+					<li><a href={launcherRepoUrl}>Launcher repository</a></li>
+					<li><a href={link('docs/changelog/')}>Changelog</a></li>
+					<li><a href={link('docs/developers/')}>For developers</a></li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+	<div class="container site-footer__legal">
+		<p>
+			<strong>Not affiliated with Sony or Insomniac.</strong> ReRAC is an unofficial fan project. It is not affiliated
+			with or endorsed by Sony Interactive Entertainment or Insomniac Games. Ratchet &amp; Clank and all related names are
+			trademarks of their respective owners.
+		</p>
+		<p>
+			ReRAC contains no game assets and no copy of the game's code. You need your own, legally obtained PlayStation 2
+			disc.
+		</p>
+	</div>
+</footer>

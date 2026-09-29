@@ -1,0 +1,29 @@
+---
+import Wordmark from '../components/Wordmark.astro';
+const { siteTitleHref } = Astro.locals.starlightRoute;
+---
+
+<a href={siteTitleHref} class="rc-site-title" aria-label="ReRAC docs home">
+	<Wordmark alt="" loading="eager" />
+	<span class="rc-site-title__tag" aria-hidden="true">Docs</span>
+</a>
+
+<style>
+	.rc-site-title {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		text-decoration: none;
+		white-space: nowrap;
+	}
+	.rc-site-title__tag {
+		padding: 0.1rem 0.45rem;
+		font-family: var(--rc-font-display);
+		font-size: 0.68rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--rc-teal-400);
+		border: 1px solid rgb(63 240 210 / 0.4);
+		border-radius: 2px;
+	}
+</style>

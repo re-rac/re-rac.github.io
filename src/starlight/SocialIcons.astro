@@ -1,0 +1,26 @@
+---
+import Default from '@astrojs/starlight/components/SocialIcons.astro';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+
+<a class="rc-dl" href={`${base}#download`}>Download</a>
+<Default />
+
+<style>
+	.rc-dl {
+		--bev: 7px;
+		padding: 0.4rem 0.85rem;
+		font-family: var(--rc-font-display);
+		font-size: 0.78rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		text-decoration: none;
+		color: var(--rc-space-950);
+		background: var(--rc-grad-bolt);
+		clip-path: polygon(var(--bev) 0, 100% 0, 100% calc(100% - var(--bev)), calc(100% - var(--bev)) 100%, 0 100%, 0 var(--bev));
+	}
+	.rc-dl:hover {
+		filter: brightness(1.1);
+		color: var(--rc-space-950);
+	}
+</style>

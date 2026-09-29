@@ -1,0 +1,35 @@
+---
+import { Image } from 'astro:assets';
+import type { ScreenshotSlot } from '../data/screenshots';
+interface Props {
+	slot: ScreenshotSlot;
+	index: number;
+}
+const { slot, index } = Astro.props;
+const n = String(index + 1).padStart(2, '0');
+---
+
+<figure class:list={['shot', { 'shot--empty': !slot.image }]}>
+	<div class="shot__frame">
+		{
+			slot.image ? (
+				<Image src={slot.image} alt={slot.alt ?? ''} widths={[480, 800, 1200]} sizes="(min-width: 60rem) 33vw, 100vw" />
+			) : (
+				<div class="shot__placeholder" role="img" aria-label={`Screenshot slot ${n}: screenshot coming soon`}>
+					<svg viewBox="0 0 48 48" width="44" height="44" aria-hidden="true">
+						<rect x="5" y="11" width="38" height="28" rx="4" fill="none" stroke="currentColor" stroke-width="2.5" />
+						<circle cx="24" cy="25" r="7.5" fill="none" stroke="currentColor" stroke-width="2.5" />
+						<path d="M16 11l3-5h10l3 5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" />
+					</svg>
+					<span class="shot__soon">Screenshot coming soon</span>
+				</div>
+			)
+		}
+		<span class="shot__tag">SLOT {n}</span>
+		<span class="shot__corner shot__corner--tl" aria-hidden="true"></span>
+		<span class="shot__corner shot__corner--tr" aria-hidden="true"></span>
+		<span class="shot__corner shot__corner--bl" aria-hidden="true"></span>
+		<span class="shot__corner shot__corner--br" aria-hidden="true"></span>
+	</div>
+	<figcaption>{slot.caption}</figcaption>
+</figure>
