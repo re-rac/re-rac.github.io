@@ -1,11 +1,11 @@
-// Generates the favicon set in public/ from src/assets/brand/rerac-icon.png:
+// Generates the favicon set in public/ from the full-quality master src/assets/brand/source/rerac-icon.png:
 //   favicon.ico (16, 32 and 48 px, PNG-encoded), favicon-32.png and apple-touch-icon.png (180 px).
-// Run it after the icon changes:  node scripts/favicons.mjs
+// Run it after the icon changes, then compress:  node scripts/favicons.mjs && oxipng -o 4 --strip safe public/favicon-32.png public/apple-touch-icon.png
 import sharp from 'sharp';
 import { writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
-const src = fileURLToPath(new URL('../src/assets/brand/rerac-icon.png', import.meta.url));
+const src = fileURLToPath(new URL('../src/assets/brand/source/rerac-icon.png', import.meta.url));
 const out = (name) => new URL(`../public/${name}`, import.meta.url);
 const png = (size) => sharp(src).resize(size, size, { kernel: 'lanczos3' }).png({ compressionLevel: 9 }).toBuffer();
 
