@@ -4,7 +4,6 @@ import SpaceScene from '../components/SpaceScene.astro';
 import DownloadCta from '../components/DownloadCta.astro';
 import Panel from '../components/Panel.astro';
 import ScreenshotSlot from '../components/ScreenshotSlot.astro';
-import BoltIcon from '../components/BoltIcon.astro';
 import Wordmark from '../components/Wordmark.astro';
 import { screenshots } from '../data/screenshots';
 import { gameReadmeUrl, siteName, siteTagline, thirdPartyArt } from '../config';
@@ -82,9 +81,7 @@ const faq = [
 							</div>
 							<div class="monitor__bar" aria-hidden="true">
 								<span class="led led--green"></span>
-								<span>VID FEED</span>
 								<span class="monitor__bar-fill"></span>
-								<span>RC-01</span>
 							</div>
 						</div>
 					</div>
@@ -97,21 +94,18 @@ const faq = [
 	<section class="section" id="what" aria-labelledby="what-title">
 		<div class="container">
 			<header class="section__head">
-				<p class="eyebrow">Briefing</p>
 				<h2 id="what-title">What is ReRAC?</h2>
 			</header>
 
 			<ol class="steps">
 				<li>
 					<Panel tone="bolt" as="div" class="step">
-						<span class="step__num" aria-hidden="true">01</span>
 						<h3>Runs natively</h3>
 						<p>ReRAC runs on your computer like any other PC game, with no emulator to set up.</p>
 					</Panel>
 				</li>
 				<li>
 					<Panel tone="teal" as="div" class="step">
-						<span class="step__num" aria-hidden="true">02</span>
 						<h3>Your copy of the game</h3>
 						<p>
 							ReRAC doesn’t come with the game. The launcher reads it from your own disc once, and then you’re ready to
@@ -121,7 +115,6 @@ const faq = [
 				</li>
 				<li>
 					<Panel tone="steel" as="div" class="step">
-						<span class="step__num" aria-hidden="true">03</span>
 						<h3>One launcher</h3>
 						<p>The ReRAC Launcher sets everything up, keeps ReRAC up to date and starts the game.</p>
 					</Panel>
@@ -143,10 +136,7 @@ const faq = [
 		<div class="container">
 			<Panel tone="steel" as="div" class="status">
 				<div class="status__head">
-					<div>
-						<p class="eyebrow">Diagnostics</p>
-						<h2 id="status-title">Where it stands</h2>
-					</div>
+					<h2 id="status-title">Where it stands</h2>
 					<p class="status__badge"><span class="led led--amber" aria-hidden="true"></span>In development</p>
 				</div>
 				<p class="status__lede">
@@ -172,7 +162,6 @@ const faq = [
 	<section class="section" id="faq" aria-labelledby="faq-title">
 		<div class="container container--narrow">
 			<header class="section__head">
-				<p class="eyebrow">Comms channel</p>
 				<h2 id="faq-title">Questions</h2>
 			</header>
 			<div class="faq">
@@ -204,7 +193,6 @@ const faq = [
 	<section class="section launchpad" aria-labelledby="launch-title">
 		<SpaceScene horizon={false} class="scene--quiet" />
 		<div class="container launchpad__inner">
-			<BoltIcon size={56} class="launchpad__bolt" />
 			<h2 id="launch-title">Ready for launch?</h2>
 			<p>Not quite yet. When the first release is out, you’ll find it here and in the <a href={link('docs/changelog/')}>changelog</a>.</p>
 			<DownloadCta id="download-again" compact />

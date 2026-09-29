@@ -111,25 +111,6 @@ p {
 	color: var(--rc-teal-400);
 }
 
-.eyebrow {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.6rem;
-	margin: 0 0 0.6rem;
-	font-family: var(--rc-font-display);
-	font-size: 0.8rem;
-	letter-spacing: 0.22em;
-	text-transform: uppercase;
-	color: var(--rc-bolt-400);
-}
-.eyebrow::before {
-	content: '';
-	width: 1.6rem;
-	height: 0.45rem;
-	background: var(--rc-hazard);
-	background-size: 17px 17px;
-}
-
 .badge {
 	display: inline-block;
 	padding: 0.1rem 0.45rem;
@@ -486,30 +467,11 @@ p {
 		radial-gradient(ellipse at center, transparent 60%, rgb(3 5 15 / 0.55));
 	pointer-events: none;
 }
-.monitor__scan::after {
-	content: '';
-	position: absolute;
-	left: 0;
-	right: 0;
-	height: 30%;
-	top: -30%;
-	background: linear-gradient(180deg, transparent, rgb(160 230 255 / 0.08), transparent);
-	animation: sweep 7s linear infinite;
-}
-@keyframes sweep {
-	to {
-		transform: translateY(440%);
-	}
-}
 .monitor__bar {
 	display: flex;
 	align-items: center;
 	gap: 0.7rem;
 	padding: 0.55rem 0.8rem 0.7rem 1.6rem;
-	font-family: var(--rc-font-mono);
-	font-size: 0.72rem;
-	letter-spacing: 0.2em;
-	color: var(--rc-steel-300);
 }
 .monitor__bar-fill {
 	flex: 1;
@@ -824,27 +786,6 @@ a.cta__platform-link:hover {
 	margin: 0;
 	color: var(--rc-text-muted);
 }
-.step__num {
-	display: block;
-	margin-bottom: 0.9rem;
-	font-family: var(--rc-font-display);
-	font-size: 2.6rem;
-	line-height: 1;
-	background: var(--rc-grad-bolt);
-	-webkit-background-clip: text;
-	background-clip: text;
-	color: transparent;
-}
-.panel--teal .step__num {
-	background: linear-gradient(180deg, #c8fff5, var(--rc-teal-400) 50%, var(--rc-blue-500));
-	-webkit-background-clip: text;
-	background-clip: text;
-}
-.panel--steel .step__num {
-	background: linear-gradient(180deg, #fff, var(--rc-steel-300) 50%, var(--rc-steel-500));
-	-webkit-background-clip: text;
-	background-clip: text;
-}
 
 /* ---------- screenshots ---------- */
 
@@ -891,15 +832,6 @@ a.cta__platform-link:hover {
 	text-transform: uppercase;
 	color: var(--rc-steel-300);
 }
-.shot__tag {
-	position: absolute;
-	top: 0.6rem;
-	left: 0.8rem;
-	font-family: var(--rc-font-mono);
-	font-size: 0.68rem;
-	letter-spacing: 0.2em;
-	color: var(--rc-bolt-400);
-}
 .shot__corner {
 	position: absolute;
 	width: 18px;
@@ -941,7 +873,7 @@ a.cta__platform-link:hover {
 .status__head {
 	display: flex;
 	flex-wrap: wrap;
-	align-items: flex-end;
+	align-items: center;
 	justify-content: space-between;
 	gap: 0.5rem 1.5rem;
 	margin-bottom: 1rem;
@@ -1095,20 +1027,6 @@ a.cta__platform-link:hover {
 .launchpad__inner > p {
 	color: var(--rc-text-muted);
 	font-size: 1.15rem;
-}
-.launchpad__bolt {
-	margin-bottom: 1rem;
-	filter: drop-shadow(0 0 18px rgb(255 166 23 / 0.6));
-	animation: spin 9s ease-in-out infinite;
-}
-@keyframes spin {
-	0%,
-	70% {
-		transform: rotate(0);
-	}
-	100% {
-		transform: rotate(360deg);
-	}
 }
 .launchpad .cta {
 	text-align: left;
