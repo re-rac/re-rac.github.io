@@ -33,12 +33,12 @@ The build works offline: without network access (or without releases) it falls b
 
 | Path | What |
 |---|---|
-| `src/config.ts` | **The one config file:** GitHub `org`, `launcherRepo`, `gameRepo`, `siteUrl`, base path, the stable download asset names per platform, the supported disc, and the `thirdPartyArt` toggles |
+| `src/config.ts` | **The one config file:** GitHub `org`, `launcherRepo`, `gameRepo`, `siteUrl`, base path, the download switches, the stable download asset names per platform, the supported disc, and the `thirdPartyArt` toggles |
 | `src/pages/index.astro` | Home page |
 | `src/pages/docs/changelog.astro` | Changelog, built from both repos' GitHub releases (`/changelog` redirects here) |
 | `src/content/docs/docs/*.md(x)` | Docs pages (Starlight). The sidebar is in `astro.config.ts` |
 | `src/lib/releases.ts` | Build-time GitHub release fetch, with the fallback |
-| `src/components/` | Home page parts: download CTA (the only client script: OS detection), space scene, panels, ticker |
+| `src/components/` | Home page parts: download CTA (`DownloadCtaScript.astro` is the only client script: OS detection, loaded only when the download is live), space scene, panels, ticker |
 | `src/starlight/` | Starlight overrides: site title, footer, header download button, single dark theme |
 | `src/styles/` | `tokens.css` (colours, fonts) shared by home and docs; `site.css` (home); `starlight.css` (docs theme) |
 | `src/data/screenshots.ts` | The home page screenshot slots; fill them here |
@@ -67,6 +67,19 @@ For example, a local build as a project site:
 SITE_URL=https://example.github.io SITE_BASE=/rerac-site npm run build
 ```
 
+### Download switches
+
+Two constants in `src/config.ts` control the home page's download block (the hero button and the one at the bottom of
+the page). Both are `false` until the launcher has real releases.
+
+| Constant | `false` (now) | `true` |
+|---|---|---|
+| `launcherDownloadEnabled` | The button reads **Coming soon**, has no link, is `aria-disabled` and styled neutral; the OS-detection script is not loaded | The button reads **Download the Launcher** and, with a release, points at the installer for the visitor's OS (see [Release data](#release-data)) |
+| `showPlatformDownloads` | Nothing under the button | The latest-release line, one card per platform (a platform without an asset says "Coming soon") and the supported-disc note |
+
+When the first launcher release is published, set both to `true` and rebuild. The release fetch runs either way, so the
+changelog is unaffected. The supported disc stays on the page regardless, in the *What is ReRAC?* section and the FAQ.
+
 ## Release data
 
 At build time (never in the browser), `src/lib/releases.ts` calls
@@ -85,7 +98,8 @@ At build time (never in the browser), `src/lib/releases.ts` calls
 
   The version, the release date and each file's size come from the release. A platform whose asset is missing shows
   "Coming soon". In the browser, a small script detects macOS, Windows or Linux and points the big button at the
-  matching installer; without JavaScript the button jumps to the platform list.
+  matching installer; without JavaScript the button jumps to the platform list. All of this applies only while the
+  [download switches](#download-switches) are on.
 - **Changelog.** Both repos' releases (drafts excluded) are merged, grouped by publish date and labelled *Game* or
   *Launcher*. The notes are GitHub's own rendered, sanitised HTML (`body_html`).
 - **Fallback.** If a fetch fails, times out (10 s), is rate-limited, or a repo is private or has no releases, the

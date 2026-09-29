@@ -1,0 +1,53 @@
+---
+/**
+ * The download button's OS detection: points the big button at the installer for the visitor's OS. Rendered by
+ * DownloadCta only when a download can actually be offered, so the page loads no script otherwise.
+ */
+---
+
+<script>
+	type P = { id: string; os: string; label: string; href: string; size: string };
+
+	function detectOs(): 'macos' | 'windows' | 'linux' | null {
+		const nav = navigator as Navigator & { userAgentData?: { platform?: string } };
+		const hint = (nav.userAgentData?.platform || navigator.platform || navigator.userAgent || '').toLowerCase();
+		const ua = navigator.userAgent.toLowerCase();
+		if (/iphone|ipad|ipod|android/.test(ua)) return null; // phones: no launcher, keep the list
+		if (hint.includes('mac')) return 'macos';
+		if (hint.includes('win')) return 'windows';
+		if (hint.includes('linux') || hint.includes('x11')) return 'linux';
+		return null;
+	}
+
+	async function macArch(): Promise<'arm64' | 'x64'> {
+		const nav = navigator as Navigator & {
+			userAgentData?: { getHighEntropyValues?: (h: string[]) => Promise<{ architecture?: string }> };
+		};
+		try {
+			const v = await nav.userAgentData?.getHighEntropyValues?.(['architecture']);
+			if (v?.architecture === 'x86') return 'x64';
+		} catch {
+			/* fall through */
+		}
+		return 'arm64'; // Safari and Firefox do not say; Apple Silicon is the common case and the tested one.
+	}
+
+	async function init(root: HTMLElement) {
+		const platforms: P[] = JSON.parse(root.dataset.platforms || '[]');
+		const os = detectOs();
+		if (!os || platforms.length === 0) return;
+		let pick = platforms.find((p) => p.os === os);
+		if (os === 'macos') {
+			const arch = await macArch();
+			pick = platforms.find((p) => p.id === `macos-${arch}`) || pick;
+		}
+		if (!pick) return;
+		const primary = root.querySelector<HTMLAnchorElement>('[data-cta-primary]');
+		const sub = root.querySelector<HTMLElement>('[data-cta-sub]');
+		if (primary) primary.href = pick.href;
+		if (sub) sub.textContent = `for ${pick.label}${pick.size ? ` · ${pick.size}` : ''}`;
+		root.querySelector(`[data-platform="${pick.id}"]`)?.classList.add('is-detected');
+	}
+
+	document.querySelectorAll<HTMLElement>('[data-download-cta]').forEach((el) => void init(el));
+</script>

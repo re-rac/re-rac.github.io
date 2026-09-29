@@ -40,6 +40,17 @@ export const thirdPartyArt = {
 	background: true,
 };
 
+/**
+ * The home page download block. Both stay false until the launcher has real releases.
+ *   launcherDownloadEnabled  true: the big button reads "Download the Launcher" and links to the installer for the
+ *                            visitor's OS (from the release data). false: a disabled "Coming soon" button with no
+ *                            link, and the OS-detection script is not loaded.
+ *   showPlatformDownloads    true: under the button, the latest-release line, one card per platform and the
+ *                            supported-disc note. false: none of these are rendered.
+ */
+export const launcherDownloadEnabled = false;
+export const showPlatformDownloads = false;
+
 export const repoUrl = (repo: string) => `https://github.com/${org}/${repo}`;
 export const launcherRepoUrl = repoUrl(launcherRepo);
 export const gameRepoUrl = repoUrl(gameRepo);

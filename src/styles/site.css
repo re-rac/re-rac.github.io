@@ -111,22 +111,6 @@ p {
 	color: var(--rc-teal-400);
 }
 
-.chip {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.55rem;
-	padding: 0.35rem 0.8rem 0.35rem 0.65rem;
-	margin: 0 0 1.25rem;
-	font-family: var(--rc-font-display);
-	font-size: 0.78rem;
-	text-transform: uppercase;
-	letter-spacing: 0.14em;
-	color: var(--rc-teal-400);
-	background: rgb(10 20 55 / 0.7);
-	border: 1px solid rgb(63 240 210 / 0.35);
-	clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
-}
-
 .eyebrow {
 	display: inline-flex;
 	align-items: center;
@@ -630,6 +614,31 @@ p {
 	to {
 		filter: drop-shadow(0 0 26px rgb(255 166 23 / 0.5));
 	}
+}
+/* not released yet (launcherDownloadEnabled = false): same shape, neutral steel, nothing to press */
+.cta__primary--off {
+	cursor: default;
+	color: var(--rc-steel-200);
+	background: linear-gradient(180deg, rgb(52 64 110 / 0.95) 0%, rgb(27 36 74 / 0.95) 100%);
+	box-shadow: inset 0 2px 0 rgb(255 255 255 / 0.12), inset 0 -3px 0 rgb(0 0 0 / 0.35), inset 0 0 0 1px rgb(129 144 189 / 0.35);
+}
+.cta__primary--off::after {
+	content: none;
+}
+.cta__primary--off:hover {
+	color: var(--rc-steel-200);
+	filter: none;
+	transform: none;
+}
+.cta__primary--off .cta__primary-icon {
+	color: var(--rc-steel-300);
+}
+.cta__primary--off .cta__primary-label {
+	letter-spacing: 0.08em;
+}
+.cta--off .cta__glow {
+	animation: none;
+	filter: drop-shadow(0 6px 18px rgb(0 0 0 / 0.45));
 }
 .cta__meta {
 	display: flex;

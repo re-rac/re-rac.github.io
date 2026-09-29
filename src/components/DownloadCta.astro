@@ -2,13 +2,23 @@
 /**
  * The primary "Download the Launcher" call to action.
  *
- * Server-rendered from the build-time release data. A tiny inline module script then detects the visitor's OS
- * and points the big button at the matching installer. Without JavaScript the button jumps to the platform list.
- * When no release exists yet, everything reads "Coming soon" and nothing links to a missing file.
+ * Two switches in src/config.ts decide what renders:
+ *   launcherDownloadEnabled  false: a disabled "Coming soon" button, no link and no script.
+ *                            true: the button, server-rendered from the build-time release data. A small script
+ *                            (DownloadCtaScript) then detects the visitor's OS and points it at the matching
+ *                            installer. When no release exists yet it reads "Coming soon" and links to the docs.
+ *   showPlatformDownloads    the latest-release line, the platform cards and the disc note under the button.
  */
-import { latestDownloadUrl, launcherReleasesUrl, supportedDisc } from '../config';
+import {
+	latestDownloadUrl,
+	launcherDownloadEnabled,
+	launcherReleasesUrl,
+	showPlatformDownloads,
+	supportedDisc,
+} from '../config';
 import { formatBytes, formatDate, getLauncherInfo } from '../lib/releases';
 import { link } from '../lib/url';
+import DownloadCtaScript from './DownloadCtaScript.astro';
 
 interface Props {
 	id?: string;
@@ -32,17 +42,34 @@ const platformData = downloads
 	}));
 
 const osTags: Record<string, string> = { macos: 'MAC', windows: 'WIN', linux: 'LNX' };
+
+/** The OS detection only has something to do when the button is live and a release has installers. */
+const interactive = launcherDownloadEnabled && anyAvailable;
+/** Without the platform list on the page, the no-JavaScript fallback is the releases page. */
+const primaryHref = showPlatformDownloads ? `#${id}-platforms` : launcherReleasesUrl;
 ---
 
 <div
-	class:list={['cta', { 'cta--compact': compact, 'cta--soon': !anyAvailable }]}
+	class:list={['cta', { 'cta--compact': compact, 'cta--soon': !anyAvailable, 'cta--off': !launcherDownloadEnabled }]}
 	id={id}
 	data-download-cta
-	data-platforms={JSON.stringify(platformData)}
+	data-platforms={interactive ? JSON.stringify(platformData) : undefined}
 >
 	<span class="cta__glow">
-		{anyAvailable ? (
-			<a class="cta__primary" href={`#${id}-platforms`} data-cta-primary>
+		{!launcherDownloadEnabled ? (
+			<span class="cta__primary cta__primary--off" role="link" aria-disabled="true">
+				<span class="cta__primary-icon" aria-hidden="true">
+					<svg viewBox="0 0 24 24" width="26" height="26">
+						<circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2.2" />
+						<path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+					</svg>
+				</span>
+				<span class="cta__primary-text">
+					<span class="cta__primary-label">Coming soon</span>
+				</span>
+			</span>
+		) : anyAvailable ? (
+			<a class="cta__primary" href={primaryHref} data-cta-primary>
 				<span class="cta__primary-icon" aria-hidden="true">
 					<svg viewBox="0 0 24 24" width="28" height="28">
 						<path d="M12 3v11m0 0-4.5-4.5M12 14l4.5-4.5M4 17v3h16v-3" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
@@ -71,110 +98,71 @@ const osTags: Record<string, string> = { macos: 'MAC', windows: 'WIN', linux: 'L
 		)}
 	</span>
 
-	<p class="cta__meta">
-		{
-			latest ? (
-				<>
-					<span class="led led--green" aria-hidden="true" />
-					Latest launcher <strong>v{version}</strong> · released <time datetime={latest.publishedAt}>{released}</time>
-					{' · '}
-					<a href={latest.htmlUrl}>Release notes</a>
-				</>
-			) : (
-				<>
-					<span class="led led--amber" aria-hidden="true" />
-					No release yet. Follow the <a href={link('docs/changelog/')}>changelog</a>.
-				</>
-			)
-		}
-	</p>
-
-	<ul class="cta__platforms" id={`${id}-platforms`} aria-label="All platforms">
-		{
-			downloads.map((d) => (
-				<li class="cta__platform" data-platform={d.id} data-os={d.os}>
-					{d.available ? (
-						<a href={latestDownloadUrl(d.asset)} class="cta__platform-link">
-							<span class="cta__os-tag" aria-hidden="true">{osTags[d.os]}</span>
-							<span class="cta__platform-name">
-								{d.label} <span class="cta__platform-detail">{d.detail}</span>
-							</span>
-							<span class="cta__platform-size">{d.size ? formatBytes(d.size) : 'Download'}</span>
-						</a>
-					) : (
-						<span class="cta__platform-link is-soon">
-							<span class="cta__os-tag" aria-hidden="true">{osTags[d.os]}</span>
-							<span class="cta__platform-name">
-								{d.label} <span class="cta__platform-detail">{d.detail}</span>
-							</span>
-							<span class="cta__platform-size">Coming soon</span>
-						</span>
-					)}
-				</li>
-			))
-		}
-	</ul>
-
 	{
-		!compact && (
-			<p class="cta__note">
-				Needs your own {supportedDisc.title} disc:{' '}
-				<span class="nowrap">{supportedDisc.region} {supportedDisc.serial} v{supportedDisc.version}</span>.
-				macOS on Apple Silicon is the only tested platform so far.
-				{latest && (
-					<>
-						{' '}
-						<a href={launcherReleasesUrl}>All releases</a>
-					</>
-				)}
-			</p>
+		showPlatformDownloads && (
+			<>
+				<p class="cta__meta">
+					{
+						latest ? (
+							<>
+								<span class="led led--green" aria-hidden="true" />
+								Latest launcher <strong>v{version}</strong> · released <time datetime={latest.publishedAt}>{released}</time>
+								{' · '}
+								<a href={latest.htmlUrl}>Release notes</a>
+							</>
+						) : (
+							<>
+								<span class="led led--amber" aria-hidden="true" />
+								No release yet. Follow the <a href={link('docs/changelog/')}>changelog</a>.
+							</>
+						)
+					}
+				</p>
+
+				<ul class="cta__platforms" id={`${id}-platforms`} aria-label="All platforms">
+					{
+						downloads.map((d) => (
+							<li class="cta__platform" data-platform={d.id} data-os={d.os}>
+								{d.available ? (
+									<a href={latestDownloadUrl(d.asset)} class="cta__platform-link">
+										<span class="cta__os-tag" aria-hidden="true">{osTags[d.os]}</span>
+										<span class="cta__platform-name">
+											{d.label} <span class="cta__platform-detail">{d.detail}</span>
+										</span>
+										<span class="cta__platform-size">{d.size ? formatBytes(d.size) : 'Download'}</span>
+									</a>
+								) : (
+									<span class="cta__platform-link is-soon">
+										<span class="cta__os-tag" aria-hidden="true">{osTags[d.os]}</span>
+										<span class="cta__platform-name">
+											{d.label} <span class="cta__platform-detail">{d.detail}</span>
+										</span>
+										<span class="cta__platform-size">Coming soon</span>
+									</span>
+								)}
+							</li>
+						))
+					}
+				</ul>
+
+				{
+					!compact && (
+						<p class="cta__note">
+							Needs your own {supportedDisc.title} disc:{' '}
+							<span class="nowrap">{supportedDisc.region} {supportedDisc.serial} v{supportedDisc.version}</span>.
+							macOS on Apple Silicon is the only tested platform so far.
+							{latest && (
+								<>
+									{' '}
+									<a href={launcherReleasesUrl}>All releases</a>
+								</>
+							)}
+						</p>
+					)
+				}
+			</>
 		)
 	}
 </div>
 
-<script>
-	type P = { id: string; os: string; label: string; href: string; size: string };
-
-	function detectOs(): 'macos' | 'windows' | 'linux' | null {
-		const nav = navigator as Navigator & { userAgentData?: { platform?: string } };
-		const hint = (nav.userAgentData?.platform || navigator.platform || navigator.userAgent || '').toLowerCase();
-		const ua = navigator.userAgent.toLowerCase();
-		if (/iphone|ipad|ipod|android/.test(ua)) return null; // phones: no launcher, keep the list
-		if (hint.includes('mac')) return 'macos';
-		if (hint.includes('win')) return 'windows';
-		if (hint.includes('linux') || hint.includes('x11')) return 'linux';
-		return null;
-	}
-
-	async function macArch(): Promise<'arm64' | 'x64'> {
-		const nav = navigator as Navigator & {
-			userAgentData?: { getHighEntropyValues?: (h: string[]) => Promise<{ architecture?: string }> };
-		};
-		try {
-			const v = await nav.userAgentData?.getHighEntropyValues?.(['architecture']);
-			if (v?.architecture === 'x86') return 'x64';
-		} catch {
-			/* fall through */
-		}
-		return 'arm64'; // Safari and Firefox do not say; Apple Silicon is the common case and the tested one.
-	}
-
-	async function init(root: HTMLElement) {
-		const platforms: P[] = JSON.parse(root.dataset.platforms || '[]');
-		const os = detectOs();
-		if (!os || platforms.length === 0) return;
-		let pick = platforms.find((p) => p.os === os);
-		if (os === 'macos') {
-			const arch = await macArch();
-			pick = platforms.find((p) => p.id === `macos-${arch}`) || pick;
-		}
-		if (!pick) return;
-		const primary = root.querySelector<HTMLAnchorElement>('[data-cta-primary]');
-		const sub = root.querySelector<HTMLElement>('[data-cta-sub]');
-		if (primary) primary.href = pick.href;
-		if (sub) sub.textContent = `for ${pick.label}${pick.size ? ` · ${pick.size}` : ''}`;
-		root.querySelector(`[data-platform="${pick.id}"]`)?.classList.add('is-detected');
-	}
-
-	document.querySelectorAll<HTMLElement>('[data-download-cta]').forEach((el) => void init(el));
-</script>
+{interactive && <DownloadCtaScript />}
