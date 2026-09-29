@@ -22,7 +22,7 @@ Games.
 ### Can I play it now?
 
 Not yet. Nothing has been released, and the game can't be played from start to finish yet. The
-[home page](../../#status) shows what works so far and what's still to come.
+[status page](../../status/) shows what works so far and what's still to come.
 
 ### Is it open source?
 

@@ -35,6 +35,8 @@ The build works offline: without network access (or without releases) it falls b
 |---|---|
 | `src/config.ts` | **The one config file:** GitHub `org`, `launcherRepo`, `gameRepo`, `siteUrl`, base path, the download switches, the stable download asset names per platform, and the `thirdPartyArt` toggles |
 | `src/pages/index.astro` | Home page |
+| `src/pages/status.astro` | The status page (`/status`): per-planet and per-area progress bars |
+| `src/data/status.ts` | The status data, hand-maintained: read by the status page and the home page's *Where it stands* lists |
 | `src/pages/docs/changelog.astro` | Changelog, built from both repos' GitHub releases (`/changelog` redirects here) |
 | `src/content/docs/docs/*.md(x)` | Docs pages (Starlight). The sidebar is in `astro.config.ts` |
 | `src/lib/releases.ts` | Build-time GitHub release fetch, with the fallback |
@@ -70,11 +72,11 @@ SITE_URL=https://example.github.io SITE_BASE=/rerac-site npm run build
 ### Download switches
 
 Two constants in `src/config.ts` control the home page's download block (the hero button and the one at the bottom of
-the page). Both are `false` until the launcher has real releases.
+the page); the first also sets the header button. Both are `false` until the launcher has real releases.
 
 | Constant | `false` (now) | `true` |
 |---|---|---|
-| `launcherDownloadEnabled` | The button reads **Coming soon**, has no link, is `aria-disabled` and styled neutral; the OS-detection script is not loaded | The button reads **Download the Launcher** and, with a release, points at the installer for the visitor's OS (see [Release data](#release-data)) |
+| `launcherDownloadEnabled` | The button reads **Coming soon**, has no link, is `aria-disabled` and styled neutral; the OS-detection script is not loaded. The header button (home and docs) reads **Coming soon** and links to the status page; the footer has no Download link | The button reads **Download the Launcher** and, with a release, points at the installer for the visitor's OS (see [Release data](#release-data)); the header button reads **Download** |
 | `showPlatformDownloads` | Nothing under the button | The latest-release line, one card per platform (a platform without an asset says "Coming soon") and a short note linking to the supported versions |
 
 When the first launcher release is published, set both to `true` and rebuild. The release fetch runs either way, so the
@@ -172,5 +174,6 @@ This repo is `re-rac/re-rac.github.io`; a fork replaces that with its own owner 
   `astro.config.ts`. Link between docs pages with relative links (`../faq/`) so they work under any base path.
 - **Screenshots:** put your own captures of ReRAC in `src/assets/screenshots/` and list them in
   `src/data/screenshots.ts`. The screenshot row under *What is ReRAC?* appears once at least one slot has an image.
-- **Status:** the home page's *Where it stands* block is a plain-language summary of the game README's *Current
-  status* section; update both together, and the date under it.
+- **Status:** the status page is hand-maintained in `src/data/status.*`. It holds a rough estimate per planet, each
+  area's list of what's done, in progress and to come, and the short *Where it stands* lists on the home page. Update
+  this file when progress changes, and set its date.

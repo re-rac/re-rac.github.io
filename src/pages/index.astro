@@ -6,7 +6,8 @@ import Panel from '../components/Panel.astro';
 import ScreenshotSlot from '../components/ScreenshotSlot.astro';
 import Wordmark from '../components/Wordmark.astro';
 import { screenshots } from '../data/screenshots';
-import { gameReadmeUrl, siteName, siteTagline, thirdPartyArt } from '../config';
+import { formatUpdated, highlights, updated } from '../data/status';
+import { siteName, siteTagline, thirdPartyArt } from '../config';
 import { link } from '../lib/url';
 import type { ImageMetadata } from 'astro';
 
@@ -18,20 +19,6 @@ const heroArt = thirdPartyArt.background ? art['../assets/third-party/rac1-bg.we
 
 // The screenshot row appears once at least one slot has a real capture (src/data/screenshots.ts).
 const shots = screenshots.filter((s) => s.image);
-
-const working = [
-	'All 19 levels load, with their lighting, sky, water and effects.',
-	'Novalis is the most complete level so far.',
-	'Ratchet’s movement, the wrench, and the weapons and gadgets.',
-	'The pause menu, the HUD, the map and the Gadgetron vendor.',
-	'Cutscenes, movies, sound effects and music.',
-];
-const missing = [
-	'Planet travel and the ship',
-	'The main menu, saving and loading',
-	'The Clank, Giant Clank and Hologuise sections',
-	'Hoverboard races and ship combat',
-];
 
 const faq = [
 	{
@@ -146,14 +133,17 @@ const faq = [
 				<div class="status__cols">
 					<div>
 						<h3><span class="led led--green" aria-hidden="true"></span>Working</h3>
-						<ul class="checklist checklist--ok">{working.map((w) => <li>{w}</li>)}</ul>
+						<ul class="checklist checklist--ok">{highlights.working.map((w) => <li>{w}</li>)}</ul>
 					</div>
 					<div>
 						<h3><span class="led led--red" aria-hidden="true"></span>Still to come</h3>
-						<ul class="checklist checklist--todo">{missing.map((m) => <li>{m}</li>)}</ul>
+						<ul class="checklist checklist--todo">
+							{highlights.toCome.map((m) => <li>{m}</li>)}
+							<li class="checklist__more"><a href={link('status/')}>…and more</a></li>
+						</ul>
 					</div>
 				</div>
-				<p class="status__foot">As of 29 September 2026. <a href={gameReadmeUrl}>More detail on GitHub</a>.</p>
+				<p class="status__foot">As of <time datetime={updated}>{formatUpdated()}</time>.</p>
 			</Panel>
 		</div>
 	</section>

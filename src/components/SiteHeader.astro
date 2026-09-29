@@ -1,5 +1,5 @@
 ---
-import { gameRepoUrl } from '../config';
+import { gameRepoUrl, launcherDownloadEnabled } from '../config';
 import { link } from '../lib/url';
 import Wordmark from './Wordmark.astro';
 ---
@@ -13,13 +13,21 @@ import Wordmark from './Wordmark.astro';
 		<nav aria-label="Main" class="site-header__nav">
 			<ul>
 				<li class="hide-sm"><a href={link('#what')}>About</a></li>
-				<li class="hide-sm"><a href={link('#status')}>Status</a></li>
+				<li class="hide-sm"><a href={link('status/')}>Status</a></li>
 				<li class="hide-sm"><a href={link('docs/faq/')}>FAQ</a></li>
 				<li><a href={link('docs/')}>Docs</a></li>
 				<li class="hide-xs"><a href={link('docs/changelog/')}>Changelog</a></li>
 				<li class="hide-sm"><a href={gameRepoUrl}>GitHub</a></li>
 			</ul>
-			<a class="btn btn--small btn--bolt" href={link('#download')}>Download</a>
+			{
+				launcherDownloadEnabled ? (
+					<a class="btn btn--small btn--bolt" href={link('#download')}>Download</a>
+				) : (
+					<a class="btn btn--small btn--soon" href={link('status/')} title="Not released yet. See how far ReRAC has come.">
+						Coming soon
+					</a>
+				)
+			}
 		</nav>
 	</div>
 	<div class="site-header__stripe" aria-hidden="true"></div>

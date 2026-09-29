@@ -1,5 +1,5 @@
 ---
-import { gameRepoUrl, launcherRepoUrl } from '../config';
+import { gameRepoUrl, launcherDownloadEnabled, launcherRepoUrl } from '../config';
 import { link } from '../lib/url';
 import Wordmark from './Wordmark.astro';
 ---
@@ -15,7 +15,8 @@ import Wordmark from './Wordmark.astro';
 			<div>
 				<h2>Play</h2>
 				<ul>
-					<li><a href={link('#download')}>Download</a></li>
+					{launcherDownloadEnabled && <li><a href={link('#download')}>Download</a></li>}
+					<li><a href={link('status/')}>Status</a></li>
 					<li><a href={link('docs/getting-started/')}>Getting started</a></li>
 					<li><a href={link('docs/troubleshooting/')}>Troubleshooting</a></li>
 					<li><a href={link('docs/faq/')}>FAQ</a></li>

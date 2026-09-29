@@ -190,6 +190,10 @@ p {
 .btn--bolt:hover {
 	color: var(--rc-space-950);
 }
+.btn--soon {
+	color: var(--rc-steel-200);
+	box-shadow: inset 0 0 0 1px rgb(129 144 189 / 0.45);
+}
 .btn--ghost {
 	background: linear-gradient(180deg, rgb(76 184 255 / 0.18), rgb(76 184 255 / 0.06));
 	box-shadow: inset 0 0 0 1px rgb(76 184 255 / 0.5);
@@ -944,6 +948,13 @@ a.cta__platform-link:hover {
 }
 .checklist--todo li::before {
 	background: #ff5a4a;
+}
+.checklist li.checklist__more::before {
+	background: var(--rc-steel-500);
+}
+.checklist__more a {
+	font-family: var(--rc-font-display);
+	letter-spacing: 0.02em;
 }
 .status__foot {
 	margin: 0;
