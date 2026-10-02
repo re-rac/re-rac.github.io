@@ -3,7 +3,7 @@ title: For developers
 description: Where the ReRAC game and launcher code live.
 ---
 
-import { LinkCard, CardGrid, Aside } from '@astrojs/starlight/components';
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
 import { gameRepoUrl, launcherRepoUrl } from '../../../config';
 
 ReRAC lives in two repositories. Their READMEs explain how to build, run and test everything, including how to run a
@@ -14,6 +14,4 @@ local build of the game in the launcher.
 	<LinkCard title="The launcher" description="The ReRAC Launcher." href={`${launcherRepoUrl}#readme`} />
 </CardGrid>
 
-<Aside type="note">
-The repositories may not be public yet. The links will work once they are.
-</Aside>
+Both are open source under the ISC licence.

@@ -2,34 +2,38 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Panel from '../components/Panel.astro';
 import { gameRepoUrl } from '../config';
-import { areas, formatUpdated, updated } from '../data/status';
+import { ceiling, formatUpdated, planets, updated } from '../data/status';
 
 // Everything on this page comes from src/data/status.ts, a hand-maintained estimate.
 ---
 
-<BaseLayout title="Status" description="How far ReRAC has come, in a few rough estimates.">
+<BaseLayout title="Status" description="How far ReRAC has come, planet by planet.">
 	<section class="section status-page" aria-labelledby="status-page-title">
 		<div class="container container--narrow">
 			<header class="status-page__head">
 				<h1 id="status-page-title" class="status-page__title">Where it stands</h1>
 				<p class="status-page__lede">
-					Here’s how far ReRAC has come. These are rough estimates and change as work lands.
+					Here’s how far ReRAC has come, planet by planet. These are rough estimates and change as work lands.
+				</p>
+				<p class="status-page__lede">
+					No planet goes above {ceiling}% for now. That means everything on it is in, and the rest is kept for
+					polish and testing.
 				</p>
 			</header>
 
-			<Panel tone="steel" as="section" class="areas" aria-label="Progress by area">
+			<Panel tone="steel" as="section" class="areas" aria-label="Progress by planet">
 				<ul class="areas__list">
 					{
-						areas.map((a, i) => (
+						planets.map((p, i) => (
 							<li class="area">
 								<div class="area__head">
-									<h2 class="area__name">{a.name}</h2>
-									<span class="area__pct">{a.percent}%</span>
+									<h2 class="area__name">{p.name}</h2>
+									<span class="area__pct">{p.percent}%</span>
 								</div>
 								<span class="gauge" aria-hidden="true" style={`--i: ${i}`}>
-									<span class="gauge__fill" style={`--w: ${a.percent}`} />
+									<span class="gauge__fill" style={`--w: ${p.percent}`} />
 								</span>
-								<p class="area__text">{a.text}</p>
+								{p.text && <p class="area__text">{p.text}</p>}
 							</li>
 						))
 					}
@@ -59,6 +63,9 @@ import { areas, formatUpdated, updated } from '../data/status';
 		font-size: 1.12rem;
 		color: var(--rc-text-muted);
 	}
+	.status-page__lede + .status-page__lede {
+		margin-top: 0.6rem;
+	}
 	.status-page__foot {
 		margin: 1.25rem 0 0;
 		font-size: 0.95rem;
@@ -73,7 +80,7 @@ import { areas, formatUpdated, updated } from '../data/status';
 		list-style: none;
 	}
 	.area + .area {
-		margin-top: 1.6rem;
+		margin-top: 1.3rem;
 	}
 	.area__head {
 		display: flex;
@@ -84,7 +91,7 @@ import { areas, formatUpdated, updated } from '../data/status';
 	}
 	.area__name {
 		margin: 0;
-		font-size: clamp(1.15rem, 1rem + 0.5vw, 1.35rem);
+		font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.2rem);
 	}
 	.area__pct {
 		font-family: var(--rc-font-mono);
@@ -92,7 +99,8 @@ import { areas, formatUpdated, updated } from '../data/status';
 		color: var(--rc-bolt-300);
 	}
 	.area__text {
-		margin: 0.6rem 0 0;
+		margin: 0.45rem 0 0;
+		font-size: 0.95rem;
 		color: var(--rc-text-muted);
 	}
 
@@ -138,7 +146,7 @@ import { areas, formatUpdated, updated } from '../data/status';
 		box-shadow: 0 0 10px rgb(255 166 23 / 0.55), inset 0 1px 0 rgb(255 255 255 / 0.45);
 		transform-origin: left center;
 		animation: gauge-fill 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-		animation-delay: calc(var(--i, 0) * 80ms);
+		animation-delay: calc(var(--i, 0) * 50ms);
 	}
 	.gauge__fill::after {
 		/* a slow sheen, like a charging bar */

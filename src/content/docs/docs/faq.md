@@ -26,7 +26,8 @@ Not yet. Nothing has been released, and the game can't be played from start to f
 
 ### Is it open source?
 
-Not yet. There's no licence for the code for now.
+Yes. The game and the launcher are both on GitHub under the ISC licence. None of the original game is included: it
+always comes from your own disc. See [For developers](../developers/).
 
 ## Your copy of the game
 
