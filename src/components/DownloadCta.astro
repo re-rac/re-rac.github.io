@@ -6,7 +6,8 @@
  *   launcherDownloadEnabled  false: a disabled "Coming soon" button, no link and no script.
  *                            true: the button, server-rendered from the build-time release data. A small script
  *                            (DownloadCtaScript) then detects the visitor's OS and points it at the matching
- *                            installer. When no release exists yet it reads "Coming soon" and links to the docs.
+ *                            installer. With no full release yet (only alpha/beta prereleases, which the stable
+ *                            `releases/latest/download` links skip) it links to the launcher's releases page.
  *   showPlatformDownloads    the latest-release line, the platform cards and a short note under the button.
  */
 import {
@@ -80,7 +81,7 @@ const primaryHref = showPlatformDownloads ? `#${id}-platforms` : launcherRelease
 				</span>
 			</a>
 		) : (
-			<a class="cta__primary" href={link('docs/getting-started/')}>
+			<a class="cta__primary" href={launcherReleasesUrl}>
 				<span class="cta__primary-icon" aria-hidden="true">
 					<svg viewBox="0 0 24 24" width="28" height="28">
 						<path d="M12 3v11m0 0-4.5-4.5M12 14l4.5-4.5M4 17v3h16v-3" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
@@ -90,7 +91,7 @@ const primaryHref = showPlatformDownloads ? `#${id}-platforms` : launcherRelease
 					<span class="cta__primary-label">Download the Launcher</span>
 					<span class="cta__primary-sub">
 						<span class="led led--amber" aria-hidden="true" />
-						Not released yet
+						Early alpha, on GitHub
 					</span>
 				</span>
 			</a>

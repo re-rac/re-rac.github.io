@@ -49,7 +49,7 @@ export const thirdPartyArt = {
  *   showPlatformDownloads    true: under the button, the latest-release line, one card per platform and a short
  *                            note. false: none of these are rendered.
  */
-export const launcherDownloadEnabled = false;
+export const launcherDownloadEnabled = true;
 export const showPlatformDownloads = false;
 
 export const repoUrl = (repo: string) => `https://github.com/${org}/${repo}`;

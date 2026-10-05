@@ -21,8 +21,7 @@ Games.
 
 ### Can I play it now?
 
-Not yet. Nothing has been released, and the game can't be played from start to finish yet. The
-[status page](../../status/) shows what works so far and what's still to come.
+Yes, as an early alpha. The first test build is out for Macs with Apple Silicon, so expect rough edges.
 
 ### Is it open source?
 

@@ -5,26 +5,28 @@ description: What you need to play ReRAC, and how to go from installing the laun
 
 import { Steps, Aside } from '@astrojs/starlight/components';
 
-<Aside type="caution" title="Not released yet">
-The launcher isn't out yet, so you can't follow these steps today. They show how it will work. Developers can try a
-local build; see [For developers](../developers/).
+<Aside type="caution" title="Early alpha">
+ReRAC is in its first test builds, so expect rough edges.
 </Aside>
 
 ## What you need
 
 - **Your own copy of the game** on disc, saved as a disc image. [Supported versions](../supported-versions/) tells you
   which disc works, and [Dumping your disc](../dumping-your-disc/) shows how to make the image.
-- **A Mac with Apple Silicon.** It's the only system ReRAC is tested on so far. Windows and Linux are planned.
+- **A Mac with Apple Silicon.** It's the only system ReRAC is tested on so far. There's a Windows build too, but
+  nobody has tried it yet. Linux is planned.
 - **About 4.5 GB of free space** for the game data.
 
 ## Install and play
 
 <Steps>
 
-1. **Install the ReRAC Launcher.** Download it from the [home page](../../#download).
+1. **Install the ReRAC Launcher.** Download it from the [home page](../../#download). It isn't signed by Apple yet, so
+   macOS stops it the first time you open it: go to **System Settings → Privacy & Security** and choose
+   **Open Anyway**.
 
-2. **Choose a version of ReRAC.** Open **Settings → Version Management → Official**, pick a version and click
-   **Set active**.
+2. **Choose a version of ReRAC.** Open **Settings → Version Management → Official**, click the download arrow next to
+   the newest version, then **Set active**.
 
 3. **Add the game.** Select **Ratchet & Clank** in the sidebar, choose **Install via ISO** and pick your disc image.
    The launcher checks the disc and copies what it needs.
