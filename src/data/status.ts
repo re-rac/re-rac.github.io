@@ -22,30 +22,30 @@ export interface Planet {
 export const ceiling = 90;
 
 /** The day this file was last brought up to date (YYYY-MM-DD). */
-export const updated = '2026-10-03';
+export const updated = '2026-10-05';
 
 const done = 'Everything on the planet is in. What’s left is polish and testing.';
-const partly = 'Most of the planet works. Some of its enemies and machines are still to come.';
+const untested = 'Everything on the planet is in and waiting for a first full play-through.';
 
 export const planets: Planet[] = [
 	{ name: 'Veldin', percent: 90, text: done },
 	{ name: 'Novalis', percent: 90, text: done },
 	{ name: 'Aridia', percent: 90, text: done },
 	{ name: 'Kerwan', percent: 90, text: done },
-	{ name: 'Eudora', percent: 80, text: 'Everything on the planet is in and waiting for a first full play-through.' },
-	{ name: 'Rilgar', percent: 55, text: partly },
-	{ name: 'Blarg Station', percent: 45, text: partly },
-	{ name: 'Umbris', percent: 45, text: partly },
-	{ name: 'Batalia', percent: 50, text: partly },
-	{ name: 'Gaspar', percent: 50, text: partly },
-	{ name: 'Orxon', percent: 40, text: partly },
-	{ name: 'Pokitaru', percent: 60, text: partly },
-	{ name: 'Hoven', percent: 50, text: partly },
-	{ name: 'Gemlik Base', percent: 50, text: partly },
-	{ name: 'Oltanis', percent: 35, text: partly },
-	{ name: 'Quartu', percent: 40, text: partly },
-	{ name: 'Kalebo III', percent: 50, text: partly },
-	{ name: 'Drek’s Fleet', percent: 40, text: partly },
+	{ name: 'Eudora', percent: 80, text: untested },
+	{ name: 'Rilgar', percent: 75, text: untested },
+	{ name: 'Blarg Station', percent: 75, text: untested },
+	{ name: 'Umbris', percent: 75, text: untested },
+	{ name: 'Batalia', percent: 75, text: untested },
+	{ name: 'Gaspar', percent: 75, text: untested },
+	{ name: 'Orxon', percent: 75, text: untested },
+	{ name: 'Pokitaru', percent: 75, text: untested },
+	{ name: 'Hoven', percent: 75, text: untested },
+	{ name: 'Gemlik Base', percent: 75, text: untested },
+	{ name: 'Oltanis', percent: 75, text: untested },
+	{ name: 'Quartu', percent: 75, text: untested },
+	{ name: 'Kalebo III', percent: 75, text: untested },
+	{ name: 'Drek’s Fleet', percent: 75, text: untested },
 	{ name: 'Veldin, the return', percent: 85, text: 'Drek’s base, the final fight and the ending are in, waiting for testing.' },
 ];
 
@@ -57,7 +57,7 @@ export const highlights = {
 		'The main menu, saving, and flying between planets.',
 		'Cutscenes, with their sound and music.',
 	],
-	toCome: ['The rest of the planets’ enemies and machines', 'Polish and testing on every planet', 'Windows and Linux', 'Mods'],
+	toCome: ['A full play-through of the other planets', 'Polish and testing', 'Windows and Linux', 'Mods'],
 };
 
 /** `updated` as "3 October 2026". */
