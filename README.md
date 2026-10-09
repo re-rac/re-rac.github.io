@@ -4,6 +4,13 @@
 
 # ReRAC website
 
+<p align="center">
+  <a href="https://re-rac.github.io">Website</a> ·
+  <a href="https://discord.gg/v2Ek44kdyu">Discord</a> ·
+  <a href="https://github.com/re-rac/rerac">Game</a> ·
+  <a href="https://github.com/re-rac/rerac-launcher">Launcher</a>
+</p>
+
 The website of **ReRAC**, the unofficial native PC port of Ratchet & Clank (PS2, 2002), served at
 <https://re-rac.github.io>: a showcase home page with the ReRAC Launcher download, and the player documentation under
 `/docs`. The game lives in [re-rac/rerac](https://github.com/re-rac/rerac) and the launcher in
