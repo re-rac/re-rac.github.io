@@ -1,5 +1,5 @@
 ---
-import { gameRepoUrl, launcherDownloadEnabled } from '../config';
+import { discordUrl, gameRepoUrl, launcherDownloadEnabled } from '../config';
 import { link } from '../lib/url';
 import Wordmark from './Wordmark.astro';
 ---
@@ -17,6 +17,7 @@ import Wordmark from './Wordmark.astro';
 				<li class="hide-sm"><a href={link('docs/faq/')}>FAQ</a></li>
 				<li><a href={link('docs/')}>Docs</a></li>
 				<li class="hide-xs"><a href={link('docs/changelog/')}>Changelog</a></li>
+				<li class="hide-sm"><a href={discordUrl}>Discord</a></li>
 				<li class="hide-sm"><a href={gameRepoUrl}>GitHub</a></li>
 			</ul>
 			{

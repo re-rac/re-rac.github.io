@@ -1,5 +1,5 @@
 ---
-import { gameRepoUrl, launcherDownloadEnabled, launcherRepoUrl } from '../config';
+import { discordUrl, gameRepoUrl, launcherDownloadEnabled, launcherRepoUrl } from '../config';
 import { link } from '../lib/url';
 import Wordmark from './Wordmark.astro';
 ---
@@ -25,6 +25,7 @@ import Wordmark from './Wordmark.astro';
 			<div>
 				<h2>Project</h2>
 				<ul>
+					<li><a href={discordUrl}>Discord</a></li>
 					<li><a href={gameRepoUrl}>Game repository</a></li>
 					<li><a href={launcherRepoUrl}>Launcher repository</a></li>
 					<li><a href={link('docs/changelog/')}>Changelog</a></li>

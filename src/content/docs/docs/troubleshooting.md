@@ -46,7 +46,7 @@ If you moved it in **Settings → Folders**, they're in the `logs` folder inside
 | "The game data doesn't match this ReRAC version." | This version of ReRAC needs the data prepared differently | Click **Re-extract** |
 | "ReRAC couldn't start." | The launcher and this version of ReRAC don't match | Get the latest launcher, or choose another version |
 
-If the game closes on its own, it has crashed. Please report it and attach the session log (`rac1-<time>.log`).
+If the game closes on its own, it has crashed. Please report it on our [Discord](https://discord.gg/v2Ek44kdyu) and attach the session log (`rac1-<time>.log`).
 
 ## macOS won't open the download
 

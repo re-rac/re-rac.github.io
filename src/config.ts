@@ -57,6 +57,8 @@ export const launcherRepoUrl = repoUrl(launcherRepo);
 export const gameRepoUrl = repoUrl(gameRepo);
 export const gameReadmeUrl = `${gameRepoUrl}#readme`;
 export const launcherReleasesUrl = `${launcherRepoUrl}/releases`;
+/** The community Discord (bug reports, help, news). */
+export const discordUrl = 'https://discord.gg/v2Ek44kdyu';
 
 export type PlatformId = 'macos-arm64' | 'macos-x64' | 'windows-x64' | 'linux-x86_64';
 export type OsFamily = 'macos' | 'windows' | 'linux';

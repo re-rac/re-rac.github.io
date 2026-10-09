@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
-import { gameRepoUrl, launcherRepoUrl, siteBase, siteDescription, siteName, siteUrl } from './src/config';
+import { discordUrl, gameRepoUrl, launcherRepoUrl, siteBase, siteDescription, siteName, siteUrl } from './src/config';
 
 // Astro wants the base without a trailing slash (except the root).
 const base = siteBase === '/' ? '/' : siteBase.replace(/\/$/, '');
@@ -28,6 +28,7 @@ export default defineConfig({
 				SocialIcons: './src/starlight/SocialIcons.astro',
 			},
 			social: [
+				{ icon: 'discord', label: 'Discord', href: discordUrl },
 				{ icon: 'github', label: 'Game repository', href: gameRepoUrl },
 				{ icon: 'rocket', label: 'Launcher repository', href: launcherRepoUrl },
 			],
