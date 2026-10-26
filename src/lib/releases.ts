@@ -5,7 +5,7 @@
  * API rate limit is hit, the functions return empty data and the pages show "Coming soon" instead of a
  * version. Nothing is ever invented.
  */
-import { gameRepo, launcherRepo, org, platforms, type Platform } from '../config';
+import { game2Repo, gameRepo, launcherRepo, org, platforms, type Platform } from '../config';
 
 export interface ReleaseAsset {
 	name: string;
@@ -128,7 +128,7 @@ export async function getLauncherInfo(): Promise<LauncherInfo> {
 }
 
 export interface ChangelogEntry extends Release {
-	kind: 'Game' | 'Launcher';
+	kind: 'Ratchet & Clank' | 'Going Commando' | 'Launcher';
 }
 
 export interface ChangelogDay {
@@ -137,11 +137,12 @@ export interface ChangelogDay {
 	entries: ChangelogEntry[];
 }
 
-/** Both repos' releases, merged and grouped by UTC publish date, newest first. */
+/** Both games' and the launcher's releases, merged and grouped by UTC publish date, newest first. */
 export async function getChangelog(): Promise<ChangelogDay[]> {
-	const [game, launcher] = await Promise.all([fetchReleases(gameRepo), fetchReleases(launcherRepo)]);
+	const [game, game2, launcher] = await Promise.all([fetchReleases(gameRepo), fetchReleases(game2Repo), fetchReleases(launcherRepo)]);
 	const all: ChangelogEntry[] = [
-		...game.map((r) => ({ ...r, kind: 'Game' as const })),
+		...game.map((r) => ({ ...r, kind: 'Ratchet & Clank' as const })),
+		...game2.map((r) => ({ ...r, kind: 'Going Commando' as const })),
 		...launcher.map((r) => ({ ...r, kind: 'Launcher' as const })),
 	].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
 

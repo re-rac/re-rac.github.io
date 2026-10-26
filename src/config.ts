@@ -18,6 +18,8 @@ const env = (typeof process !== 'undefined' ? process.env : {}) as Record<string
 export const org = env.RERAC_ORG || 're-rac';
 export const launcherRepo = 'rerac-launcher';
 export const gameRepo = 'rerac';
+/** Going Commando's port. */
+export const game2Repo = 'rerac2';
 
 export const siteUrl = (env.SITE_URL || `https://${org}.github.io`).replace(/\/+$/, '');
 /** Always starts and ends with "/". */

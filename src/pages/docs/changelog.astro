@@ -1,6 +1,6 @@
 ---
 /**
- * The changelog: both repos' GitHub releases, rendered at build time and grouped by date.
+ * The changelog: the GitHub releases of both games and the launcher, rendered at build time and grouped by date.
  * With no releases (or no network at build time) it says so instead of showing anything made up.
  */
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
@@ -14,12 +14,12 @@ const headings = days.map((d) => ({ depth: 2, slug: `d-${d.date}`, text: formatD
 <StarlightPage
 	frontmatter={{
 		title: 'Changelog',
-		description: 'Every release of ReRAC and the ReRAC Launcher, newest first.',
+		description: 'Every release of ReRAC, ReRAC2 and the ReRAC Launcher, newest first.',
 		tableOfContents: days.length > 0,
 	}}
 	headings={headings}
 >
-	<p>Every release of ReRAC and the ReRAC Launcher, newest first.</p>
+	<p>Every release of ReRAC (Ratchet &amp; Clank), ReRAC2 (Going Commando) and the ReRAC Launcher, newest first.</p>
 
 	{
 		days.length === 0 ? (
@@ -35,7 +35,7 @@ const headings = days.map((d) => ({ depth: 2, slug: `d-${d.date}`, text: formatD
 					{day.entries.map((e) => (
 						<article class="cl-entry">
 							<header class="cl-entry__head">
-								<span class:list={['cl-kind', e.kind === 'Game' ? 'cl-kind--game' : 'cl-kind--launcher']}>{e.kind}</span>
+								<span class:list={['cl-kind', e.kind === 'Launcher' ? 'cl-kind--launcher' : 'cl-kind--game']}>{e.kind}</span>
 								<h3>
 									<a href={e.htmlUrl}>{e.name}</a>
 								</h3>
